@@ -3,7 +3,7 @@ import {Server} from "socket.io";
 const io = new Server({
   cors: {
     origin: "http://localhost:8081",
-    methods: ["GET", "POST"],
+    // methods: ["GET", "POST"],
   },
 });
 const genMsgId = () => Math.random().toString(36).substr(2, 10);

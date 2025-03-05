@@ -20,7 +20,7 @@
 - room support
 - connection state recovery
  
-# installation and creating the project
+# installation and creating the project- old stuff
 - npm install -g react-native-cli
 - npx react-native init MyApp
 - or 
@@ -36,7 +36,7 @@ Get-ChildItem -Path Env:\Path
 adb devices
 npx react-native run-android
 
-# add this in build.gradle file to enable icons
+# add this in build.gradle file to enable icons of android/app
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
 
 In terminal:
