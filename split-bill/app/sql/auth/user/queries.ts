@@ -1,0 +1,1 @@
+const CREATE_USER=`INSERT INTO users() VALUES()`
