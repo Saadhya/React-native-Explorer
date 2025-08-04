@@ -1,3 +1,5 @@
+icons:-
+https://oblador.github.io/react-native-vector-icons/#Feather
 
 SPLITWISE FEATURES:- 
 create friends & groups

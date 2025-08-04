@@ -35,6 +35,8 @@ Get-ChildItem -Path Env:\Path
 # verify device connection:-
 adb devices
 npx react-native run-android
+npx expo start --tunnel
+
 
 # add this in build.gradle file to enable icons of android/app
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")

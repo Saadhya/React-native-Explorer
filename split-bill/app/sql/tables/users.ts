@@ -10,3 +10,6 @@ isregistered INTEGER DEFAULT 0
 `;
 // alter commands, delete, index
 // friend TEXT DEFAULT '[]',
+export const alterTableUsers= `ALTER TABLE users ADD COLUMN isregistered INTEGER DEFAULT 0;`;
+
+export const tableDefUsers= "pragma table_info(users);";
