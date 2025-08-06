@@ -14,3 +14,7 @@ app.use('/expenses', expenseRoutes);
 app.listen(PORT, () => {
   console.log(`Splitwise backend running on http://localhost:${PORT}`);
 });
+
+app.get('/', (req, res) => {
+  res.send('Splitwise Backend is running!');
+});
