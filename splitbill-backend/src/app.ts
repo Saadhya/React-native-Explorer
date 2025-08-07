@@ -16,5 +16,5 @@ app.listen(PORT, () => {
 });
 
 app.get('/', (req, res) => {
-  res.send('Splitwise Backend is running!');
+  res.send('Splitwise Backend is bhaging!');
 });
