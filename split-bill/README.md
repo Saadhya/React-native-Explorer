@@ -79,3 +79,24 @@ module.exports = config;
 - for the error:-Uncaught Error
 Aborted(LinkError: WebAssembly.instantiate(): Import #69 "a" "pa": function import requires a callable)
 - run the app on the android phone on expo app
+
+# error- CommandError: ngrok tunnel took too long to connect.
+npm install -g ngrok
+
+# Verify ngrok installation and configuration:
+Ensure ngrok is installed globally: npm install -g ngrok or yarn global add ngrok.
+If using nvm (Node Version Manager), ensure the npm prefix is correctly aligned with your active Node.js version. You can check this with npm config get prefix and fix it with npm config set prefix "$NVM_BIN/..".
+Reinstall the @expo/ngrok package: npm install -g @expo/ngrok@^4.1.0
+
+Adjust Expo start command and package.json:
+Ensure your start script in package.json explicitly uses the --tunnel flag, e.g., "start": "expo start --tunnel".
+Try running npx expo start --tunnel --reset-cache to clear the Expo cache.
+
+# this worked at last to run 
+npm install -g ngrok
+npm install @expo/ngrok@2.4.3
+npx expo start --reset-cache
+npm expo start --tunnel
+
+
+

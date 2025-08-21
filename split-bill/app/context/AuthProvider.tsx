@@ -62,6 +62,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     password: string;
     phone: string;
   }) => {
+    console.log(`name: ${name}, email: ${email}, phone: ${phone}, password: ${password}`);
+    
     if (!isStringValid(name, email, phone, password)) {
       console.log("Invalid input");
       return;
@@ -97,7 +99,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoggedIn(true);
     } catch (error) {
       console.error("Error creating user:", error);
-      return;
+      throw error;
     }
 
     // update state

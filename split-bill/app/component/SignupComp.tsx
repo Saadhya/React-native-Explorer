@@ -1,11 +1,13 @@
-import { Dimensions, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Alert, Dimensions, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Theme } from "@/assets/theme";
 import { TextInput, Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { AuthScreen } from "../utils/constants";
+import { useAuth } from "../context/AuthProvider";
 
 const SignupComp = () => {
+  const auth = useAuth();
   const nav = useNavigation();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -13,8 +15,15 @@ const SignupComp = () => {
   const [password, setPassword] = useState("");
   const [showPwd, setShowPwd] = useState(false);
 
-  const handleLogin = (e: any) => {
-    console.log(`name: ${name}, Password: ${password}, Phone: ${phone}`);
+  const handleSignup = async(e: any) => {
+    console.log([`name: ${name}, Password: ${password}, Phone: ${phone}`]);
+    try{
+      await auth.signup({ name, email, phone, password });
+    }
+    catch(error){
+      console.log(error);
+      // return Alert.alert(String(error));
+    }
   };
   const switchToLogin = () => {
     // @ts-ignore
@@ -50,7 +59,7 @@ const SignupComp = () => {
         value={email}
         onChange={(e) => setEmail(e.nativeEvent.text)}
         textContentType="emailAddress"
-        maxLength={10}
+        maxLength={50}
       />
 
       <TextInput
@@ -68,7 +77,7 @@ const SignupComp = () => {
         }
       />
 
-      <Button onPress={handleLogin} mode="contained" style={styles.loginBtn}>
+      <Button onPress={handleSignup} mode="contained" style={styles.loginBtn}>
         Signup
       </Button>
       <Button onPress={switchToLogin} mode="text">

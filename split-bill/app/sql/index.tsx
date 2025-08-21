@@ -21,7 +21,7 @@ export const onInitDatabase = async () => {
     // await db.execAsync(UserTable + ";" + SessionTable);
     await db.execAsync(UserTable);
     await db.execAsync(SessionTable);
-    await db.execAsync(alterTableUsers)
+    // await db.execAsync(alterTableUsers);
     await getAllTables();
   } catch (error) {
     console.log("Error while initializing database: ", error);
@@ -32,10 +32,9 @@ export const onInitDatabase = async () => {
 export const onErrorInitialisingDatabase = async () => {
   try {
     // console.log("abd");
-    
     // alert("Error initializing database");
   } catch (error) {
-    console.log("Error while initializing database: ", error);
+    console.log("Error on initializing database: ", error);
     throw error;
   }
 };
