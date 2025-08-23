@@ -96,7 +96,7 @@ Try running npx expo start --tunnel --reset-cache to clear the Expo cache.
 npm install -g ngrok
 npm install @expo/ngrok@2.4.3
 npx expo start --reset-cache
-npm expo start --tunnel
+npx expo start --tunnel
 
-
+npx expo start - working for mobile and emulator both
 

@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { FriendsScreen, GroupStackScreen } from "../utils/constants";
+import { FriendsScreen, GroupScreen } from "../utils/constants";
 import AllFriends from "../screens/Friends/AllFriends";
 import FriendPage from "../screens/Friends/FriendPage";
 import AddFriend from "../screens/Friends/AddFriend";

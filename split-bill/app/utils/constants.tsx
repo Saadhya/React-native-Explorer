@@ -1,4 +1,4 @@
-export const GroupStackScreen = {
+export const GroupScreen = {
   AllGroups: 'AllGroups',
   GroupItem:"GroupItem",
   GroupMembers:'GroupMembers',

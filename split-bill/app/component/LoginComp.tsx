@@ -1,17 +1,28 @@
 import { Dimensions, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Theme } from "@/assets/theme";
 import { TextInput, Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { AuthScreen } from "../utils/constants";
+import { getAllUsers } from "../sql/auth/user";
+import { useAuth } from "../context/AuthProvider";
 
 const LoginComp = () => {
+  const auth = useAuth();
   const nav = useNavigation();
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [showPwd, setShowPwd] = useState(false);
-  const handleLogin = (e: any) => {
+
+  const handleLogin = async (e: any) => {
     console.log(`User ID: ${userId}, Password: ${password}`);
+    try {
+      await auth.login(Number(userId), password);
+
+    } catch (error) {
+      console.log(error);
+      
+    }
   };
   const switchToSignup = () => {
     // @ts-ignore
@@ -22,6 +33,12 @@ const LoginComp = () => {
     console.log(showPwd);
     
   };
+  useEffect(() => {
+    // Any initialization logic can go here
+    const userslist = getAllUsers();
+    userslist.then((res) => console.log("Users List:",res))
+    
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.infoText}>Welcome back, Login</Text>

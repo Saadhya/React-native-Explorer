@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import AddNewGroup from '@/app/component/groups/AddNewGroup'
 
-const AddGroup = () => {
+const GroupList = () => {
   return (
-    <AddNewGroup/>
+    <View>
+      <Text>GroupList</Text>
+    </View>
   )
 }
 
-export default AddGroup
+export default GroupList
 
 const styles = StyleSheet.create({})

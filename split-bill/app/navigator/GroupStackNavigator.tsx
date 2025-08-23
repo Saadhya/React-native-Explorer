@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { GroupStackScreen } from "../utils/constants";
+import { GroupScreen } from "../utils/constants";
 import AddGroup from "../screens/Groups/AddGroup";
 import AllGroups from "../screens/Groups/AllGroups";
 import GroupMember from "../screens/Groups/GroupMember";
@@ -10,13 +10,13 @@ const Stack = createNativeStackNavigator();
 const GroupStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name={GroupStackScreen.AllGroups} component={AllGroups} />
-      <Stack.Screen name={GroupStackScreen.AddGroup} component={AddGroup} />
+      <Stack.Screen name={GroupScreen.AllGroups} component={AllGroups} />
+      <Stack.Screen name={GroupScreen.AddGroup} component={AddGroup} />
       <Stack.Screen
-        name={GroupStackScreen.GroupMembers}
+        name={GroupScreen.GroupMembers}
         component={GroupMember}
       />
-      <Stack.Screen name={GroupStackScreen.GroupItem} component={GroupItem} />
+      <Stack.Screen name={GroupScreen.GroupItem} component={GroupItem} />
     </Stack.Navigator>
   );
 };
