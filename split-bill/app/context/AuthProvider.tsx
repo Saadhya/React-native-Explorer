@@ -8,7 +8,7 @@ import {
 } from "../sql/auth/sessions";
 
 const AuthContext = createContext({
-  user: { name: "", email: "", phone: "", password: "" },
+  user: { id:0, name: "", email: "", phone: "", password: "" },
   loggedIn: false,
   login: async (id: number, password: string) => {},
   signup: async ({
@@ -34,16 +34,10 @@ interface NewUser {
 };
 
 export const useAuth = () => useContext(AuthContext);
-// type NewUser = {
-//   id: number;
-//   name: string;
-//   email: string;
-//   phone: string;
-//   password?: string;
-// };
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // add properties
   const [user, setUser] = useState({
+    id:0,
     name: "",
     email: "",
     phone: "",
@@ -85,7 +79,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           }
 
           // Set user and mark as logged in
-          setUser({
+          setUser({id: user.id,
             name: user.name,
             email: user.email,
             phone: user.phone,
@@ -124,12 +118,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       // create session
-      console.log("creating session !");
       await deleteSessions(); // clear previous sessions
       const session = await createNewSession(logUser.id);
       console.log("session created successfully: ", session);
 
       setUser({
+        id: logUser.id,
         name: logUser.name,
         email: logUser.email,
         phone: logUser.phone,
@@ -179,13 +173,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       // Create session
-      console.log("Creating session...");
+      // console.log("Creating session...");
       await deleteSessions(); // Clear previous sessions
       const session = await createNewSession(newuser.id);
       console.log("Session created successfully: ", session);
 
       // Update state
       setUser({
+        id: newuser.id,
         name: newuser.name,
         email: newuser.email,
         phone: newuser.phone,

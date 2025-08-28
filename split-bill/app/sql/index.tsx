@@ -1,4 +1,7 @@
 import Connection from "./connection";
+import { CreateActivitiesTable } from "./tables/activities";
+import { CreateGroupMembersTable } from "./tables/group_members";
+import { CreateGroupsTable } from "./tables/groups";
 import { SessionTable } from "./tables/session";
 import { alterTableUsers, UserTable } from "./tables/users";
 
@@ -18,10 +21,11 @@ export const onInitDatabase = async () => {
   alert("Database initialized");
   try {
     const db = await Connection.getConnection();
-    // await db.execAsync(UserTable + ";" + SessionTable);
     await db.execAsync(UserTable);
     await db.execAsync(SessionTable);
-    // await db.execAsync(alterTableUsers);
+    await db.execAsync(CreateGroupsTable);
+    await db.execAsync(CreateGroupMembersTable);
+    await db.execAsync(CreateActivitiesTable);
     await getAllTables();
   } catch (error) {
     console.log("Error while initializing database: ", error);
