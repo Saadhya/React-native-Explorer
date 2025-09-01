@@ -104,3 +104,6 @@ npx expo start - working for mobile and emulator both
 - uninstall expo-go
 - then run this cmd:- npx expo start --tunnel
 
+
+npm install rimraf@^4.0.0 uuid@^9.0.0 glob@^9.0.0
+npm audit fix
