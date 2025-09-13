@@ -2,15 +2,15 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { SelectContacts } from '@/app/component/friends/SelectContacts'
 
-const GroupMember = () => {
+const GroupItemPersons = () => {
   return (
     <View>
-      <Text>GroupMember</Text>
+      <Text>GroupItemPersons</Text>
       <SelectContacts/>
     </View>
   )
 }
 
-export default GroupMember
+export default GroupItemPersons
 
 const styles = StyleSheet.create({})

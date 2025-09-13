@@ -82,7 +82,8 @@ Aborted(LinkError: WebAssembly.instantiate(): Import #69 "a" "pa": function impo
 
 # error- CommandError: ngrok tunnel took too long to connect.
 npm install -g ngrok
-
+npm install @expo/ngrok@2.4.3
+npx expo start --reset-cache
 # Verify ngrok installation and configuration:
 Ensure ngrok is installed globally: npm install -g ngrok or yarn global add ngrok.
 If using nvm (Node Version Manager), ensure the npm prefix is correctly aligned with your active Node.js version. You can check this with npm config get prefix and fix it with npm config set prefix "$NVM_BIN/..".
@@ -92,11 +93,6 @@ Adjust Expo start command and package.json:
 Ensure your start script in package.json explicitly uses the --tunnel flag, e.g., "start": "expo start --tunnel".
 Try running npx expo start --tunnel --reset-cache to clear the Expo cache.
 
-# this worked at last to run 
-npm install -g ngrok
-npm install @expo/ngrok@2.4.3
-npx expo start --reset-cache
-
 npx expo start - working for mobile and emulator both
 
 # working:-
@@ -105,5 +101,29 @@ npx expo start - working for mobile and emulator both
 - then run this cmd:- npx expo start --tunnel
 
 
-npm install rimraf@^4.0.0 uuid@^9.0.0 glob@^9.0.0
-npm audit fix
+- npm install rimraf@^4.0.0 uuid@^9.0.0 glob@^9.0.0
+- npm audit fix
+
+# NEW LIBRARIES:-
+npx expo install react-native-pager-view
+npx expo install expo-contacts
+npx expo install react-native-multiple-select
+
+# ERROR:- 
+- Error [ERR_REQUIRE_ESM]: require() of ES Module C:\MY-PERSONAL\projects\React-native-Explorer\split-bill\metro.config.js from C:\MY-PERSONAL\projects\React-native-Explorer\split-bill\node_modules\cosmiconfig\node_modules\import-fresh\index.js not supported.     
+metro.config.js is treated as an ES module file as it is a .js file whose nearest parent package.json contains "type": "module" which declares all .js files in that package scope as ES modules.
+Instead either rename metro.config.js to end in .cjs, change the requiring code to use dynamic import() which is available in all CommonJS modules, or change "type": "module" to "type": "commonjs" in C:\MY-PERSONAL\projects\React-native-Explorer\split-bill\package.json to treat all .js files as CommonJS (using .mjs for all ES modules instead).
+
+# SOLUTION:-
+- metro.config.js is used by the Metro bundler, which expects a CommonJS module.
+If your project uses "type": "module" in package.json, then .js files are treated as ES Modules, which breaks Metro's expectations.
+- type: "commonjs"
+Renaming to .cjs tells Node to treat it as CommonJS, solving the compatibility issue.
+
+# how to upgrade sdk 54 version
+- https://docs.expo.dev/workflow/upgrading-expo-sdk-walkthrough/
+- npm install expo@^54.0.0 
+- npx expo install --fix
+- npx expo-doctor
+- npm install --legacy-peer-deps
+- npx expo install --check

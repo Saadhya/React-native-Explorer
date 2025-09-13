@@ -3,6 +3,8 @@ export const GroupScreen = {
   GroupItem:"GroupItem",
   GroupMembers:'GroupMembers',
   AddGroup: 'AddGroup',
+  GroupItemPersons:'GroupItemPersons',
+  GroupItemMain:'GroupItemMain',
 }
 export const Tabs = {
   Groups: 'Groups',

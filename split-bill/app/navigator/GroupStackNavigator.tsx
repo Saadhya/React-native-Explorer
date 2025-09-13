@@ -1,12 +1,24 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { GroupScreen } from "../utils/constants";
 import AddGroup from "../screens/Groups/AddGroup";
 import AllGroups from "../screens/Groups/AllGroups";
 import GroupMember from "../screens/Groups/GroupMember";
 import GroupItem from "../screens/Groups/GroupItem";
+import GroupItemMain from "../screens/Groups/GroupItemMain";
+import GroupItemPersons from "../screens/Groups/GroupItemPersons";
 
 const Stack = createNativeStackNavigator();
+const Tab = createMaterialTopTabNavigator();
 
+const GroupItemNavigator=()=>{
+  return(
+   <Tab.Navigator>
+    <Tab.Screen options={{title:'Splits', animationEnabled:true}} name={GroupScreen.GroupItemMain} component={GroupItemMain}/>
+    <Tab.Screen options={{title:'Members'}} name={GroupScreen.GroupItemPersons} component={GroupItemPersons}/>
+   </Tab.Navigator>
+  )
+}
 const GroupStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

@@ -7,7 +7,7 @@ const GroupLayout = ({children}:{children: React.ReactNode}) => {
     <View style={styles.container}>
      <GroupAppBar/>
      <Text style={styles.text}>All groups</Text>
-     <ScrollView style={styles.container}>{children}</ScrollView>
+     <View style={styles.container}>{children}</View>
     </View>
   )
 }
