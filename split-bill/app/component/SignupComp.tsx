@@ -1,5 +1,6 @@
-import { Alert, Dimensions, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Alert, Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Theme } from "@/assets/theme";
 import { TextInput, Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";

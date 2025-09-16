@@ -193,7 +193,17 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const logout = async () => {};
+  const logout = async () => {
+    try {
+      await deleteSessions();
+      setUser({id:0, name: "", email: "", phone: "", password: "" });
+      setIsLoggedIn(false);
+    }
+    catch (error) { 
+      console.log("Error while logout: ", error);
+      throw error;
+    }
+  };
   const resetPassword = async (email: string) => {};
 
   return (

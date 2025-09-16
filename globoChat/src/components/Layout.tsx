@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, SafeAreaView} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import Header from '../screens/Header';
 import Footer from '../screens/Footer';
 

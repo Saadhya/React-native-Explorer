@@ -10,15 +10,15 @@ const GroupItem = () => {
    * 1 Add new participants(select contacts of the groups, add those contact in db, unique mobile, unregistered users, )
    * 2 share expense
    * 3 see details, history of payments
-   * 
    */
 
 const route = useRoute<GroupItemRouteProp>();
-const {group} = route.params;  
+const {group} = route.params || {};  
+// const {params:{group}}= useRoute(); old version
+
   return (
     <View>
-      <Text>{"group"}</Text>
-      <Text>{group.name}</Text>
+      <Text>{group?.group_name || 'No group'}</Text>
     </View>
   )
 }

@@ -7,6 +7,8 @@ module.exports = function (api) {
             plugins: [
                 'react-native-paper/babel',
                 'react-native-reanimated/plugin',
+                'react-native-worklets/plugin', 
+                'expo-router/babel'
             ],
         },
     }

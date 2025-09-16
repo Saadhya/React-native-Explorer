@@ -4,11 +4,9 @@ name TEXT NOT NULL,
 email TEXT NOT NULL UNIQUE,
 phone TEXT NOT NULL UNIQUE,
 password TEXT NOT NULL,
-isregistered INTEGER DEFAULT 0,
-created_at DATETIME  DEFAULT CURRENT_TIMESTAMP,
-updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-`;
+is_registered INTEGER DEFAULT 0,
+created_at DATETIME  DEFAULT CURRENT_TIMESTAMP
+);`;
 // alter commands, delete, index
 // friend TEXT DEFAULT '[]',
 

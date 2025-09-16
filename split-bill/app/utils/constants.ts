@@ -1,7 +1,7 @@
 export const GroupScreen = {
   AllGroups: 'AllGroups',
   GroupItem:"GroupItem",
-  GroupMembers:'GroupMembers',
+  AddGroupMembers:'AddGroupMembers',
   AddGroup: 'AddGroup',
   GroupItemPersons:'GroupItemPersons',
   GroupItemMain:'GroupItemMain',

@@ -4,10 +4,19 @@ import GroupContent from '@/app/component/groups'
 
 const AllGroups = () => {
   return (
-   <GroupContent/>
+    <View style={styles.container}>
+      <GroupContent/>
+    </View>
   )
 }
 
 export default AllGroups
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center",
+    padding:20,
+  }
+})

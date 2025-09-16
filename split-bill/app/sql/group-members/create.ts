@@ -8,13 +8,13 @@ export const createGroupMembers=async({arrOfUserId, groupId, db}:{arrOfUserId: n
 
     try {         
         for(const id of arrOfUserId){
-            console.log(id);
+        //   console.log("user id: ", id);
             // insert to group members table
             const result = await db.runAsync(CREATE_GROUP_MEMBER, [groupId, id]);
             console.log("new group member added", result);        
         }
     } catch (error) {
-        console.log("Error while creating group members: ", error);
+        console.log("Error in creating group members: ", error);
         throw error;        
     }
 }

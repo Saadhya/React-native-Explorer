@@ -100,7 +100,6 @@ npx expo start - working for mobile and emulator both
 - uninstall expo-go
 - then run this cmd:- npx expo start --tunnel
 
-
 - npm install rimraf@^4.0.0 uuid@^9.0.0 glob@^9.0.0
 - npm audit fix
 
@@ -127,3 +126,13 @@ Renaming to .cjs tells Node to treat it as CommonJS, solving the compatibility i
 - npx expo-doctor
 - npm install --legacy-peer-deps
 - npx expo install --check
+
+# update these libs 
+- npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
+- update babel file
+
+- working cmd = npx expo start --clear
+
+
+
+

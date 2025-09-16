@@ -1,7 +1,8 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import * as Contacts from "expo-contacts";
 import { useEffect, useState } from "react";
 import MultiSelect from "react-native-multiple-select";
+import { Button } from "react-native-paper";
 
 const getContactsPermission = async () => {
   // get means we already have permission, we are just fetching it
@@ -24,19 +25,23 @@ const getContactsPermission = async () => {
   }
 };
 
-export const SelectContacts = () => {
+export const SelectContacts = ({onSelectContacts}:{onSelectContacts:any}) => {
   const [contacts, setContacts] = useState<Contacts.Contact[]>([]);
   const [selectedContacts, setSelectedContacts] = useState<Contacts.Contact[]>(
     []
   );
 
   const onItemChange = (data: any) => {
+    // console.log("data : "+ data);
     setSelectedContacts(data);
+    onSelectContacts(data);
   };
   useEffect(() => {
     async function getContacts() {
       const hasPermissions = await getContactsPermission();
-      if (!hasPermissions) return;
+      if (!hasPermissions) {
+        return;
+      }
       // const contacts = await Contacts.getContactsAsync({fields:["name", "phoneNumbers", "emails"]});
       const contacts = await Contacts.getContactsAsync({
         fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
@@ -46,7 +51,7 @@ export const SelectContacts = () => {
       );
       if (validContacts.length === 0) return;
       setContacts(validContacts);
-      console.log(validContacts);
+      // console.log(validContacts[8].firstName);
     }
     getContacts();
   }, []);
@@ -54,8 +59,10 @@ export const SelectContacts = () => {
   return (
     <View>
       <Text>Select Contacts</Text>
+     
       {contacts.length > 0 && (
         <MultiSelect
+          uniqueKey="id"
           items={contacts}
           onSelectedItemsChange={onItemChange}
           selectedItems={selectedContacts}
@@ -64,3 +71,9 @@ export const SelectContacts = () => {
     </View>
   );
 };
+const styles=StyleSheet.create({
+  container:{
+    flex:1,
+    width:'100%'
+  }
+});

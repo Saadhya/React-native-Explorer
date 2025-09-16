@@ -17,7 +17,7 @@ const auth= useAuth();
   }
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{headerShown:false}}>
       <Tab.Screen
         name={Tabs.Groups}
         options={{

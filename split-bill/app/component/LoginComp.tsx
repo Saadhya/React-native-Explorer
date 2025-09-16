@@ -1,4 +1,5 @@
-import { Dimensions, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useState } from "react";
 import { Theme } from "@/assets/theme";
 import { TextInput, Button } from "react-native-paper";
@@ -30,8 +31,7 @@ const LoginComp = () => {
   };
   const togglePasswordVisibility = () => {
     setShowPwd((prev) => !prev);
-    console.log(showPwd);
-    
+    // console.log(showPwd);    
   };
   useEffect(() => {
     // Any initialization logic can go here
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
+    margin:'auto',
   },
   infoText: {
     fontWeight: 500,

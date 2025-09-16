@@ -5,6 +5,7 @@ import MainNavigator from "./navigator";
 import { SQLiteProvider } from "expo-sqlite";
 import { DatabaseName } from "./utils/constants";
 import { onErrorInitialisingDatabase, onInitDatabase } from "./sql";
+import AppStateProvider from "./context/AppStateProvider";
 
 export default function RootLayout() {
   return (
@@ -18,7 +19,9 @@ export default function RootLayout() {
           onError={onErrorInitialisingDatabase}
         >
           <AuthProvider>
-            <MainNavigator />
+            <AppStateProvider>
+              <MainNavigator />
+            </AppStateProvider>
           </AuthProvider>
         </SQLiteProvider>
       </Suspense>
@@ -26,11 +29,11 @@ export default function RootLayout() {
   );
 }
 
-const styles=StyleSheet.create({
-container:{
-  flex:1,
-  justifyContent:"center",
-  alignItems:"center",
-  padding:20,
-}
-});
+// const styles=StyleSheet.create({
+// container:{
+//   flex:1,
+//   justifyContent:"center",
+//   alignItems:"center",
+//   padding:20,
+// }
+// });

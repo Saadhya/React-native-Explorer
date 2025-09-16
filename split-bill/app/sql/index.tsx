@@ -14,7 +14,7 @@ export const getAllTables = async () => {
     const db = await Connection.getConnection();
     const QUERY = `SELECT name FROM sqlite_master WHERE type='table';`;
     const result = await db.getAllAsync(QUERY);
-    console.log(JSON.stringify(result));
+    console.log("ALL TABLES: "+ JSON.stringify(result));
     
   } catch (error) {
     console.log("Error fetching tables: ", error);
@@ -25,15 +25,34 @@ export const onInitDatabase = async () => {
   alert("Database initialized");
   try {
     const db = await Connection.getConnection();
+    
+    console.log("Creating UserTable...");
     await db.execAsync(UserTable);
+    
+    console.log("Creating SessionTable...");
     await db.execAsync(SessionTable);
+    
+    console.log("Creating GroupsTable...");
     await db.execAsync(CreateGroupsTable);
+    
+    console.log("Creating GroupMembersTable...");
     await db.execAsync(CreateGroupMembersTable);
+    
+    console.log("Creating ActivitiesTable...");
     await db.execAsync(CreateActivitiesTable);
+    
+    console.log("Creating PaymentsTable...");
     await db.execAsync(CreatePaymentsTable);
+    
+    console.log("Creating ExpensesTable...");
     await db.execAsync(CreateExpensesTable);
+    
+    console.log("Creating ExpenseSplitsTable...");
     await db.execAsync(CreateExpenseSplitsTable);
+    
+    console.log("Creating FriendsTable...");
     await db.execAsync(CreateFriendsTable);
+    
     await getAllTables();
   } catch (error) {
     console.log("Error while initializing database: ", error);

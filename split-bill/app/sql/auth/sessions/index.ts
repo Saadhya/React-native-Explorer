@@ -4,6 +4,8 @@ import { ADD_NEW_SESSION, DELETE_SESSION, GET_SESSION } from "./queries";
 export const createNewSession = async (userId: number) => {
   try {
     const db = await Connection.getConnection();
+    console.log("Creating new session for user ID: ", userId);
+    
     const result = await db.runAsync(ADD_NEW_SESSION, userId);
     console.log("New session created with ID: ", JSON.stringify(result));
     return result;
