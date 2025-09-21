@@ -5,6 +5,7 @@ export const GroupScreen = {
   AddGroup: 'AddGroup',
   GroupItemPersons:'GroupItemPersons',
   GroupItemMain:'GroupItemMain',
+  GroupAddExpense:'GroupAddExpense'
 }
 export const Tabs = {
   Groups: 'Groups',

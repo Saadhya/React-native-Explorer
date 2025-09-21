@@ -25,16 +25,14 @@ const getContactsPermission = async () => {
   }
 };
 
-export const SelectContacts = ({onSelectContacts}:{onSelectContacts:any}) => {
+export const SelectContacts = ({selectedContacts,setSelectedContacts }:{selectedContacts:any, setSelectedContacts:any}) => {
   const [contacts, setContacts] = useState<Contacts.Contact[]>([]);
-  const [selectedContacts, setSelectedContacts] = useState<Contacts.Contact[]>(
-    []
-  );
+  // const [selectedContacts, setSelectedContacts] = useState<Contacts.Contact[]>(
+  //   []
+  // );
 
   const onItemChange = (data: any) => {
-    // console.log("data : "+ data);
     setSelectedContacts(data);
-    onSelectContacts(data);
   };
   useEffect(() => {
     async function getContacts() {

@@ -4,22 +4,27 @@ import { SelectContacts } from "@/app/component/friends/SelectContacts";
 import { useAppState } from "@/app/context/AppStateProvider";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "react-native-paper";
+import * as Contacts from "expo-contacts";
 import { createNewGroupMembersTransaction } from "@/app/sql/group/create";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const AddGroupMembers = () => {
-  const [contactsToAdd, setContactsToAdd] = useState([]);
+   const [selectedContacts, setSelectedContacts] = useState<Contacts.Contact[]>(
+    []
+  );
   const nav = useNavigation();
   const { selectedGroup }: { selectedGroup: any } = useAppState();
   console.log("group id : "+selectedGroup);
 
   const addNewMembers = async () => {
-    alert("adding new members: " + contactsToAdd.length);
-    if (contactsToAdd.length === 0) return;
+    alert("adding new members: " + selectedContacts.length);
+    if (selectedContacts.length === 0) return;
     // add contactsToAdd to group members table with selectedGroup id
+
     try {
+      // check disabling this function call if no contacts are selected or not working as expected
       await createNewGroupMembersTransaction({
-        contactIds: contactsToAdd,
+        contactIds: selectedContacts,
         groupId: selectedGroup.id,
       });
       alert("success");
@@ -33,7 +38,7 @@ const AddGroupMembers = () => {
       headerShadowColor: "",
       headerRight: (props: any) => {
         return (
-          <Button {...props} mode="text" onPress={addNewMembers}>
+          <Button {...props} mode="text" onPress={addNewMembers.bind(this)}>
             Create
           </Button>
         );
@@ -42,12 +47,12 @@ const AddGroupMembers = () => {
   }, []);
   const onSelectContacts = (data: any) => {
     console.log("agm : " + data);
-    setContactsToAdd(data);
+    setSelectedContacts(data);
   };
   return (
     <SafeAreaView style={styles.container}>
       {/* <Text style={styles.title}>AddGroupMembers</Text> */}
-      <SelectContacts onSelectContacts={onSelectContacts} />
+      <SelectContacts selectedContacts={selectedContacts} setSelectedContacts={setSelectedContacts}/>
     </SafeAreaView>
   );
 };

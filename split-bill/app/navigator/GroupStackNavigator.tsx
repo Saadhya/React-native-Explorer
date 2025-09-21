@@ -7,6 +7,7 @@ import GroupItem from "../screens/Groups/GroupItem";
 import GroupItemMain from "../screens/Groups/GroupItemMain";
 import GroupItemPersons from "../screens/Groups/GroupItemPersons";
 import AddGroupMembers from "../screens/Groups/AddGroupMembers";
+import GroupAddExpense from "../screens/Groups/GroupAddExpense";
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -29,6 +30,7 @@ const GroupStackNavigator = () => {
         component={AddGroupMembers}
       />
       <Stack.Screen name={GroupScreen.GroupItem} component={GroupItemNavigator} />
+      <Stack.Screen name={GroupScreen.GroupAddExpense} component={GroupAddExpense} />
     </Stack.Navigator>
   );
 };
