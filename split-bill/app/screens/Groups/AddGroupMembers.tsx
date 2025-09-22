@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Alert } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { SelectContacts } from "@/app/component/friends/SelectContacts";
 import { useAppState } from "@/app/context/AppStateProvider";
@@ -17,17 +18,22 @@ const AddGroupMembers = () => {
   console.log("group id : "+selectedGroup);
 
   const addNewMembers = async () => {
-    alert("adding new members: " + selectedContacts.length);
-    if (selectedContacts.length === 0) return;
+    console.log("selectedContacts : "+selectedContacts.length);
+    // if (selectedContacts.length === 0) {
+    //   console.log("no contacts");
+    //   return;
+    // }
+    
     // add contactsToAdd to group members table with selectedGroup id
+    // Alert.alert(`Adding new members: ${selectedContacts.length}`);
 
     try {
       // check disabling this function call if no contacts are selected or not working as expected
       await createNewGroupMembersTransaction({
         contactIds: selectedContacts,
-        groupId: selectedGroup.id,
+        groupId: selectedGroup,
       });
-      alert("success");
+      Alert.alert("Success", "Members added to the group.");
     } catch (err) {
       console.log("error while adding new members to group: ", err);
     }
@@ -45,13 +51,10 @@ const AddGroupMembers = () => {
       },
     });
   }, []);
-  const onSelectContacts = (data: any) => {
-    console.log("agm : " + data);
-    setSelectedContacts(data);
-  };
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Text style={styles.title}>AddGroupMembers</Text> */}
+      <Button onPress={addNewMembers}>Add Contacts</Button>
       <SelectContacts selectedContacts={selectedContacts} setSelectedContacts={setSelectedContacts}/>
     </SafeAreaView>
   );

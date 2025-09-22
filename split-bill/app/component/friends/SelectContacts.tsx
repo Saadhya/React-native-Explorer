@@ -32,6 +32,7 @@ export const SelectContacts = ({selectedContacts,setSelectedContacts }:{selected
   // );
 
   const onItemChange = (data: any) => {
+    console.log(data);
     setSelectedContacts(data);
   };
   useEffect(() => {
@@ -52,6 +53,8 @@ export const SelectContacts = ({selectedContacts,setSelectedContacts }:{selected
       // console.log(validContacts[8].firstName);
     }
     getContacts();
+    console.log("contacts: ",selectedContacts);
+    
   }, []);
 
   return (
@@ -60,6 +63,9 @@ export const SelectContacts = ({selectedContacts,setSelectedContacts }:{selected
      
       {contacts.length > 0 && (
         <MultiSelect
+          styleItemsContainer={{
+            height: 400,
+          }}
           uniqueKey="id"
           items={contacts}
           onSelectedItemsChange={onItemChange}

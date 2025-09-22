@@ -9,7 +9,7 @@ export const createUser = async ({
   is_registered = 1
 }: {
   name: string;
-  email: string;
+  email: string | null;
   phone: string;
   password: string;
   is_registered?: number;
@@ -19,7 +19,8 @@ export const createUser = async ({
     
     // Check if a user with the same phone already exists
     const existingPhone = await db.getFirstAsync(GET_USER_BY_PHONE, [phone]);
-    const existingEmail = await db.getFirstAsync(GET_USER_BY_EMAIL, [email]);
+    // Only check email uniqueness if an email is provided
+    // const existingEmail = email ? await db.getFirstAsync(GET_USER_BY_EMAIL, [email]) : null;
     if (existingPhone) {
       throw new Error("A user with this phone number already exists.");
     }

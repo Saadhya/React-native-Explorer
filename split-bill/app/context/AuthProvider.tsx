@@ -25,7 +25,7 @@ const AuthContext = createContext({
   logout: async () => {},
   resetPassword: async (email: string) => {},
 });
-interface NewUser {
+export interface NewUser {
   id: number;
   name: string;
   email: string;

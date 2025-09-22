@@ -4,18 +4,25 @@ import { Chip, PaperProvider } from "react-native-paper";
 import SplitByPercentage from "@/app/component/expense/SplitByPercentage";
 import { getMembersOfGroup } from "@/app/sql/group-members/get";
 import { useAppState } from "@/app/context/AppStateProvider";
+
+interface User {
+  id: string | number;
+  name?: string;
+}
 const SplitType = {
   percentage: "percentage",
   equally: "equaly",
 };
 const GroupAddExpense = () => {
-  const [users, setUsers] = useState<any[]>([]);
-  const groupId = useAppState().selectedGroup?.id;
+  const [users, setUsers] = useState<User[]>([]);
+  const groupId = useAppState().selectedGroup;
 
   const [modalVisible, setModalVisible] = useState(false);
   const [splitType, setSplitType] = useState(SplitType.equally);
   useLayoutEffect(() => {
-    getMembersOfGroup(groupId).then(setUsers).catch(console.log);
+    getMembersOfGroup(groupId).then((data) => {
+      setUsers(data as User[]);
+    }).catch(console.log);
   }, []);
 
   const splitByEqually = () => {
@@ -29,7 +36,7 @@ const GroupAddExpense = () => {
     <PaperProvider>
         {splitType === SplitType.percentage && 
         <SplitByPercentage closeModal={()=>setModalVisible(false)}
-        users={} visible={modalVisible}/>}
+        users={users} visible={modalVisible}/>}
       <Text>Select Split Type</Text>
 
       <View style={styles.selectionView}>

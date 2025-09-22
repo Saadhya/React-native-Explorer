@@ -40,10 +40,12 @@ export const getContactDetailsById = async (id: any) => {
     throw err;
   }
 };
-export const registerUserUnOfficial = async (contactIds: number[]) => {
+export const registerUserUnOfficial = async (contactIds: Array<string | number>) => {
     let userIds = []; //real user ids which are present in users table
     for (const id of contactIds) {
-        const contact = await getContactDetailsById(id);
+        // Expo Contacts expects string IDs; normalize here
+        const contactId = String(id);
+        const contact = await getContactDetailsById(contactId);
         if (!contact) {
         continue;
         }
@@ -56,7 +58,7 @@ export const registerUserUnOfficial = async (contactIds: number[]) => {
         } else {
         userdata = await createUser({
             name: contact.name,
-            email: "",
+            email: null,
             phone: contact.phone,
             password: "",
             is_registered: 0

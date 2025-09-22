@@ -11,9 +11,9 @@ const GroupItemMain = () => {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text>GroupItemMain</Text>
-      <FAB onPress={navToGroupExpense} label='Add Expense' icon={"wallet-plus-outline"}/>
+      <FAB style={styles.fab} onPress={navToGroupExpense} label='Add Expense' icon={"wallet-plus-outline"}/>
     </View>
   )
 }
@@ -22,7 +22,8 @@ export default GroupItemMain
 
 const styles = StyleSheet.create({
   container:{
-    flex:1
+    flex:1,
+    // padding:20
   },
   fab:{
     position:'absolute',

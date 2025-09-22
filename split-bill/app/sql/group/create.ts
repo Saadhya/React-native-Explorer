@@ -54,12 +54,11 @@ export const createNewGroupMembersTransaction = async ({
     if(userIds.length > 0){
         await createGroupMembers({ arrOfUserId: userIds, groupId, db });
     }
-    await createGroupMembers({ arrOfUserId: contactIds, groupId, db });
 
     await db.execAsync("COMMIT");
     console.log(`group id to be returned: ${groupId}`);
 
-    return groupId;
+    // return groupId;
   } catch (error) {
     console.log("transaction failed");
     await db.execAsync("ROLLBACK");
