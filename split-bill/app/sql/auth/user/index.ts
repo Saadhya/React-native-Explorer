@@ -64,7 +64,7 @@ export const getAllUsers = async () => {
   try {
     const db = await Connection.getConnection();
     const result = await db.getAllAsync(GET_ALL_USERS);
-    console.log("All users:", result);
+    // console.log("All users:", result);
     return result;
   } catch (error) {
     console.log("Error fetching users:", error);

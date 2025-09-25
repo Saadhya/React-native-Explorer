@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
-import { Chip, PaperProvider } from "react-native-paper";
+import { Button, Chip, PaperProvider, TextInput } from "react-native-paper";
 import SplitByPercentage from "@/app/component/expense/SplitByPercentage";
 import { getMembersOfGroup } from "@/app/sql/group-members/get";
 import { useAppState } from "@/app/context/AppStateProvider";
+import { Feather } from "@expo/vector-icons";
 
 interface User {
   id: string | number;
@@ -16,6 +17,9 @@ const SplitType = {
 const GroupAddExpense = () => {
   const [users, setUsers] = useState<User[]>([]);
   const groupId = useAppState().selectedGroup;
+  const [expenseDesc, setExpenseDesc] = useState("");
+  const [expenseAmount, setExpenseAmount] = useState("");
+  const [expenseData, setexpenseData] = useState<Record<string, number> | null>(null);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [splitType, setSplitType] = useState(SplitType.equally);
@@ -32,10 +36,19 @@ const GroupAddExpense = () => {
     setSplitType(SplitType.percentage);
     setModalVisible(true)
   };
+  const onCloseModal = (data?: Record<string, number>) => {
+    setModalVisible(false);
+    setexpenseData(data ?? null);
+  };
+
+  const createSplitHandler=()=>{
+    console.log("splitData handler: ", expenseData);
+    console.log("users handler: ",users.map((user)=>user.name));
+  }
   return (
     <PaperProvider>
         {splitType === SplitType.percentage && 
-        <SplitByPercentage closeModal={()=>setModalVisible(false)}
+        <SplitByPercentage closeModal={onCloseModal}
         users={users} visible={modalVisible}/>}
       <Text>Select Split Type</Text>
 
@@ -53,7 +66,18 @@ const GroupAddExpense = () => {
           Percentage
         </Chip>
       </View>
-      <Text>GroupAddExpense</Text>
+      <View style={styles.container}>
+        <Feather name="folder" size={30} color="black" />
+        <TextInput style={styles.input} mode="flat" placeholder="Enter Expense" value={expenseDesc} onChangeText={setExpenseDesc}/>
+      </View> 
+
+      <View style={styles.container}>
+        <Feather name="dollar-sign" size={30} color="black" />
+        <TextInput style={styles.input} keyboardType="number-pad" mode="flat" placeholder="Enter Expense" 
+        value={expenseAmount} onChangeText={setExpenseAmount}/>
+      </View>
+      <Button onPress={createSplitHandler} mode="contained">Create Split</Button>
+      {/* <Text>GroupAddExpense</Text> */}
     </PaperProvider>
   );
 };
@@ -61,7 +85,12 @@ const GroupAddExpense = () => {
 export default GroupAddExpense;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flexDirection:'row',
+    justifyContent:'center',
+    alignItems:'center',
+    width:Dimensions.get("window").width,
+  },
   selectionView: {
     flexDirection: "row",
     justifyContent: "center",
@@ -70,4 +99,14 @@ const styles = StyleSheet.create({
     gap: 10,
     marginVertical: 10,
   },
+  inputBox:{
+    flexDirection:'row',
+    justifyContent:'center',
+    alignItems:'center',
+  },
+  input:{
+    width:Dimensions.get("window").width -150,
+    marginVertical:10,
+  }
+  
 });
