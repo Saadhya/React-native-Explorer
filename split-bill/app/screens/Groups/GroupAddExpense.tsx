@@ -5,11 +5,9 @@ import SplitByPercentage from "@/app/component/expense/SplitByPercentage";
 import { getMembersOfGroup } from "@/app/sql/group-members/get";
 import { useAppState } from "@/app/context/AppStateProvider";
 import { Feather } from "@expo/vector-icons";
+import ExpenseDetails from "@/app/component/expense/ExpenseDetails";
+import { User } from "@/app/utils/interface";
 
-interface User {
-  id: string | number;
-  name?: string;
-}
 const SplitType = {
   percentage: "percentage",
   equally: "equaly",
@@ -24,7 +22,7 @@ const GroupAddExpense = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [splitType, setSplitType] = useState(SplitType.equally);
   useLayoutEffect(() => {
-    getMembersOfGroup(groupId).then((data) => {
+    getMembersOfGroup(groupId?.id).then((data) => {
       setUsers(data as User[]);
     }).catch(console.log);
   }, []);
@@ -42,7 +40,7 @@ const GroupAddExpense = () => {
   };
 
   const createSplitHandler=()=>{
-    console.log("splitData handler: ", expenseData);
+    // console.log("splitData handler: ", expenseData);
     console.log("users handler: ",users.map((user)=>user.name));
   }
   return (
@@ -50,7 +48,6 @@ const GroupAddExpense = () => {
         {splitType === SplitType.percentage && 
         <SplitByPercentage closeModal={onCloseModal}
         users={users} visible={modalVisible}/>}
-      <Text>Select Split Type</Text>
 
       <View style={styles.selectionView}>
         <Chip
@@ -66,18 +63,20 @@ const GroupAddExpense = () => {
           Percentage
         </Chip>
       </View>
-      <View style={styles.container}>
+      <View style={styles.inputBox}>
         <Feather name="folder" size={30} color="black" />
         <TextInput style={styles.input} mode="flat" placeholder="Enter Expense" value={expenseDesc} onChangeText={setExpenseDesc}/>
       </View> 
 
-      <View style={styles.container}>
+      <View style={styles.inputBox}>
         <Feather name="dollar-sign" size={30} color="black" />
         <TextInput style={styles.input} keyboardType="number-pad" mode="flat" placeholder="Enter Expense" 
         value={expenseAmount} onChangeText={setExpenseAmount}/>
       </View>
-      <Button onPress={createSplitHandler} mode="contained">Create Split</Button>
-      {/* <Text>GroupAddExpense</Text> */}
+      <Button onPress={createSplitHandler} mode="text">Create Split</Button>
+      {expenseData && users && 
+      <ExpenseDetails expenseData={expenseData} totalAmount={expenseAmount} users={users}/>
+      }
     </PaperProvider>
   );
 };
@@ -89,7 +88,6 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'center',
     alignItems:'center',
-    width:Dimensions.get("window").width,
   },
   selectionView: {
     flexDirection: "row",
@@ -103,10 +101,10 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'center',
     alignItems:'center',
+    marginVertical:10,
   },
   input:{
     width:Dimensions.get("window").width -150,
-    marginVertical:10,
   }
-  
+
 });

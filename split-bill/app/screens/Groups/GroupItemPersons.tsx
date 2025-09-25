@@ -9,32 +9,34 @@ import { GroupScreen } from "@/app/utils/constants";
 
 const GroupItemPersons = () => {
   const nav = useNavigation();
-  const [members, setMembers] = useState<any[]>([]);
-  const { selectedGroup }: { selectedGroup: any } = useAppState();
-  console.log("item persons: " + selectedGroup);
+  // const [members, setMembers] = useState<any[]>([]);
+  const { selectedGroup, setGroupMembers, groupMembers } = useAppState();
+  console.log("item persons: " + selectedGroup?.id);
 
   useLayoutEffect(() => {
     // fetch group members from db using selectedGroup
-    getMembersOfGroup(+selectedGroup)
-      // .then(setMembers)
-      .then((res) => {
-        console.log("group members: ", res);
-        setMembers(res || []);
-      })
-      .catch((err) => {
-        console.log("error while fetching group members: ", err);
-      }); //+ unary + operator to convert string to number
-  }, []);
+    if(selectedGroup?.id){
+      getMembersOfGroup(+selectedGroup?.id)
+        .then(setGroupMembers)
+        // .then((res) => {
+        //   console.log("group members: ", res);
+        //   setGroupMembers(res || []);
+        // })
+        .catch((err) => {
+          console.log("error while fetching group members: ", err);
+        }); //  + unary + operator to convert string to number
+    }
+  }, [selectedGroup]);
 
   const navToAddMembers = () => {
-    (nav as any).navigate(GroupScreen.AddGroupMembers, {members});
+    (nav as any).navigate(GroupScreen.AddGroupMembers, {groupMembers});
   }
 
   return (
     <View>
       <Button mode="contained" onPress={navToAddMembers} style={styles.addBtn}>Add New Members</Button>
       <Text>GroupItemPersons</Text>
-      <Text style={styles.text}>{JSON.stringify(members)} </Text>
+      <Text style={styles.text}>{JSON.stringify(groupMembers)} </Text>
     </View>
   );
 };

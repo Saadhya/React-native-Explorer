@@ -2,11 +2,8 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { Button, Modal, Portal } from 'react-native-paper'
 import SelectPercentage from './SelectPercentage';
+import { User } from '@/app/utils/interface';
 
-interface User {
-  id: string | number;
-  name?: string;
-}
 const generateSplitData = (users: User[]): Record<string, number> => {
   const data: Record<string, number> = {};
   const initialSplit = 100 / users.length;
@@ -81,7 +78,7 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor:"white",
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
   },
   button:{
     width:300,

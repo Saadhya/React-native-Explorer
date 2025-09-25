@@ -7,6 +7,14 @@ import {
   getSession,
 } from "../sql/auth/sessions";
 
+export interface NewUser {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  password?: string;
+};
+
 const AuthContext = createContext({
   user: { id:0, name: "", email: "", phone: "", password: "" },
   loggedIn: false,
@@ -25,13 +33,6 @@ const AuthContext = createContext({
   logout: async () => {},
   resetPassword: async (email: string) => {},
 });
-export interface NewUser {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  password?: string;
-};
 
 export const useAuth = () => useContext(AuthContext);
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
