@@ -3,7 +3,7 @@ import React, { Children, createContext, useContext, useState } from "react";
 
   // Define the type for a group
   interface Group {
-    id: string | number;
+    id: number;
     group_name?: string;
     created_by?: string ;
     created_at?: string;

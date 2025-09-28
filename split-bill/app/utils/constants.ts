@@ -5,7 +5,8 @@ export const GroupScreen = {
   AddGroup: 'AddGroup',
   GroupItemPersons:'GroupItemPersons',
   GroupItemMain:'GroupItemMain',
-  GroupAddExpense:'GroupAddExpense'
+  GroupAddExpense:'GroupAddExpense',
+  GroupExpenseItem:'GroupExpenseItem'
 }
 export const Tabs = {
   Groups: 'Groups',
@@ -32,3 +33,9 @@ export const AuthScreen={
 }
 
 export const DatabaseName = 'splitbill.db';
+
+export const paymentStatus={
+    PENDING:"PENDING",
+    COMPLETED:"COMPLETED",
+    FAILED:"FAILED"
+}

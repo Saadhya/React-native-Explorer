@@ -1,0 +1,1 @@
+export const CREATE_NEW_ACTIVITY = `INSERT INTO activities (activity,user_id) VALUES (?, ?)`

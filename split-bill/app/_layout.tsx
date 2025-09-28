@@ -6,6 +6,8 @@ import { SQLiteProvider } from "expo-sqlite";
 import { DatabaseName } from "./utils/constants";
 import { onErrorInitialisingDatabase, onInitDatabase } from "./sql";
 import AppStateProvider from "./context/AppStateProvider";
+import { Provider as PaperProvider } from 'react-native-paper';
+import { appTheme } from './theme';
 
 export default function RootLayout() {
   return (
@@ -18,18 +20,18 @@ export default function RootLayout() {
           onInit={onInitDatabase}
           onError={onErrorInitialisingDatabase}
         >
-          <AuthProvider>
-            <AppStateProvider>
-              <MainNavigator />
-            </AppStateProvider>
-          </AuthProvider>
+          <PaperProvider theme={appTheme}>
+            <AuthProvider>
+              <AppStateProvider>
+                <MainNavigator />
+              </AppStateProvider>
+            </AuthProvider>
+          </PaperProvider>
         </SQLiteProvider>
       </Suspense>
     </React.Fragment>
   );
 }
-
-// const styles=StyleSheet.create({
 // container:{
 //   flex:1,
 //   justifyContent:"center",

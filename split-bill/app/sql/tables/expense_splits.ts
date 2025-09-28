@@ -1,4 +1,4 @@
-export const CreateExpenseSplitsTable = `CREATE TABLE IF NOT EXISTS expenses (
+export const CreateExpenseSplitsTable = `CREATE TABLE IF NOT EXISTS expense_splits (
 expense_id INTEGER NOT NULL,
 user_id INTEGER NOT NULL,
 amount_owed REAL NOT NULL,

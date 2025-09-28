@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Alert, Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { Button, Chip, PaperProvider, TextInput } from "react-native-paper";
 import SplitByPercentage from "@/app/component/expense/SplitByPercentage";
@@ -7,6 +7,8 @@ import { useAppState } from "@/app/context/AppStateProvider";
 import { Feather } from "@expo/vector-icons";
 import ExpenseDetails from "@/app/component/expense/ExpenseDetails";
 import { User } from "@/app/utils/interface";
+import { addNewExpense } from "@/app/sql/expenses/add";
+import { useAuth } from "@/app/context/AuthProvider";
 
 const SplitType = {
   percentage: "percentage",
@@ -14,18 +16,22 @@ const SplitType = {
 };
 const GroupAddExpense = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const groupId = useAppState().selectedGroup;
+  const groupId = useAppState().selectedGroup?.id;
   const [expenseDesc, setExpenseDesc] = useState("");
   const [expenseAmount, setExpenseAmount] = useState("");
-  const [expenseData, setexpenseData] = useState<Record<string, number> | null>(null);
+  const [expenseData, setexpenseData] = useState<Record<string, number>>({});
 
   const [modalVisible, setModalVisible] = useState(false);
   const [splitType, setSplitType] = useState(SplitType.equally);
+  const {user:{id}}= useAuth();
   useLayoutEffect(() => {
-    getMembersOfGroup(groupId?.id).then((data) => {
-      setUsers(data as User[]);
-    }).catch(console.log);
-  }, []);
+    if (groupId === undefined) return;
+    getMembersOfGroup(groupId)
+      .then((data) => {
+        setUsers(data as User[]);
+      })
+      .catch(console.log);
+  }, [groupId]);
 
   const splitByEqually = () => {
     setSplitType(SplitType.equally);
@@ -36,12 +42,23 @@ const GroupAddExpense = () => {
   };
   const onCloseModal = (data?: Record<string, number>) => {
     setModalVisible(false);
-    setexpenseData(data ?? null);
+    setexpenseData(data ?? {});
   };
 
-  const createSplitHandler=()=>{
+  const createSplitHandler=async()=>{
     // console.log("splitData handler: ", expenseData);
     console.log("users handler: ",users.map((user)=>user.name));
+    if (groupId === undefined) {
+      Alert.alert("No group selected", "Please select a group before adding an expense.");
+      return;
+    }
+    try{
+        await addNewExpense(expenseData, +expenseAmount, expenseDesc, +id, groupId);
+        alert("success");
+    }catch(error){
+        console.log("Error in createSplitHandler: ", error);
+        alert("Failed to createSplit");
+    }
   }
   return (
     <PaperProvider>
