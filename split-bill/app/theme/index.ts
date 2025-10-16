@@ -10,11 +10,11 @@ export const appTheme: MD3Theme = {
     primary: '#1E88E5', // Blue 600
     primaryContainer: '#90CAF9',
     secondary: '#03DAC6',
-    background: '#0f1311',
+    // background: '#0f1311',
     surface: '#1e2420',
-    onPrimary: '#FFFFFF',
+    // onPrimary: '#FFFFFF',
     onSecondary: '#000000',
-    onBackground: '#FFFFFF',
-    onSurface: '#FFFFFF',
+    // onBackground: '#FFFFFF',
+    // onSurface: '#FFFFFF',
   },
 };

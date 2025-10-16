@@ -1,5 +1,5 @@
 import Connection from "../connection";
-import { GET_EXPENSES_OF_GROUP } from "./queries";
+import { GET_EXPENSE_SPLIT_OF_EXPENSE, GET_EXPENSES_OF_GROUP } from "./queries";
 
 // NOTE: This shape reflects the columns selected in GET_EXPENSES_OF_GROUP
 // Adjust as your schema evolves. Extra columns from the DB are allowed.
@@ -29,3 +29,14 @@ export const getExpensesOfGroup = async (groupId: number): Promise<Expense[]> =>
     throw error;
   }
 };
+export const getExpenseSplits=async(expenseId: number)=>{
+    try {
+        const db=await Connection.getConnection();
+        const result=(await db.getAllAsync(GET_EXPENSE_SPLIT_OF_EXPENSE,[expenseId, expenseId]));
+        console.log("Expense splits of expense: ",expenseId,JSON.stringify(result));
+        return result;
+    } catch (error) {
+        console.log("Error in getExpenseSplits: ",error);
+        throw error;
+    }
+}

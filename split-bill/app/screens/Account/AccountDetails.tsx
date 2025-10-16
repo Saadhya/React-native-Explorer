@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { useAuth } from '@/app/context/AuthProvider';
-import AccountComp from '@/app/component/AccountComp';
+import AccountComp from '@/app/component/account/AccountComp';
 
 const AccountDetails = () => {
   const auth = useAuth();

@@ -82,12 +82,12 @@ const GroupAddExpense = () => {
       </View>
       <View style={styles.inputBox}>
         <Feather name="folder" size={30} color="black" />
-        <TextInput style={styles.input} mode="flat" placeholder="Enter Expense" value={expenseDesc} onChangeText={setExpenseDesc}/>
+        <TextInput style={styles.input} mode="flat" placeholder="Expense Name" value={expenseDesc} onChangeText={setExpenseDesc}/>
       </View> 
 
       <View style={styles.inputBox}>
         <Feather name="dollar-sign" size={30} color="black" />
-        <TextInput style={styles.input} keyboardType="number-pad" mode="flat" placeholder="Enter Expense" 
+        <TextInput style={styles.input} keyboardType="number-pad" mode="flat" placeholder="Expense Amount" 
         value={expenseAmount} onChangeText={setExpenseAmount}/>
       </View>
       <Button onPress={createSplitHandler} mode="text">Create Split</Button>
