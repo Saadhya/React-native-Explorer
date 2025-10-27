@@ -1,13 +1,20 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
-import { ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator, Button } from 'react-native-paper';
 import { getExpensesOfGroup, getExpenseSplits } from '@/app/sql/expenses/get';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/app/navigation/types';
 import { paymentStatus } from '@/app/utils/constants';
 import { Feather } from '@expo/vector-icons';
+import { useAuth } from '@/app/context/AuthProvider';
 
-const RenderItem=({data, expense}:{data:any, expense:any })=>{
+const RenderItem=({data, expense, id}:{data:any, expense:any , id:any})=>{
+    const isUserDuePending=()=>{
+        if(data.user_id===id && data.status==paymentStatus.PENDING){
+            return true;
+        }
+        return false;
+    }
     return(
         <View style={[styles.renderSection, {backgroundColor: expense.status==paymentStatus.COMPLETED?'green':'red'}]}>
             <View>
@@ -19,6 +26,7 @@ const RenderItem=({data, expense}:{data:any, expense:any })=>{
             <View style={styles.rightSection}>
                 <Feather name='clock' size={20} color='#0b132b'/>
             </View>
+            {isUserDuePending() && (<Button mode='elevated' textColor='black' onPress={()=>alert("setttle amount")}>Settle</Button>)}
 
             <Text>expense: {JSON.stringify(data)}</Text>
         </View>
@@ -27,6 +35,7 @@ const RenderItem=({data, expense}:{data:any, expense:any })=>{
 
 const GroupExpenseItem = ({ route }: NativeStackScreenProps<RootStackParamList, 'GroupExpenseItem'>) => {
     const { expense } = route.params;
+    const {user:{id}}=useAuth();
     const [expenses, setExpenses]=useState<any>([]);
     const [loading, setLoading]=useState(false);
     const [expenseSplits, setExpenseSplits]=useState<any>([]);
@@ -58,7 +67,7 @@ const GroupExpenseItem = ({ route }: NativeStackScreenProps<RootStackParamList, 
         <Text style={styles.text}>Expense Amount: {expense.amount}</Text>
         <Text style={styles.text}>Expense Paid by: {expense.name}</Text>
         <Text style={styles.text}>Expense Description: {expense.description}</Text>
-        <FlatList data={expenses} renderItem={(info)=><RenderItem data={info.item} expense={expense}/>}/>
+        <FlatList data={expenses} renderItem={(info)=><RenderItem data={info.item} expense={expense} id={id} />}/>
     </View>
   ) 
 }
