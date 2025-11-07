@@ -8,6 +8,7 @@ export const addNewPaymentRecord=async(db: any, payerId: number, payeeId: number
         return newPayment?.lastInsertRowId;
     }catch(error){
         console.log("Error in addNewPaymentRecord: ", error);
+        throw error;
     }
     
 }

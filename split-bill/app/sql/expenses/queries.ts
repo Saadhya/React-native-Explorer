@@ -9,3 +9,5 @@ export const GET_EXPENSE_SPLIT_OF_EXPENSE= `SELECT es.*, u.name, p.status, p.amo
 INNER JOIN users u ON es.user_id = u.id
 INNER JOIN payments p ON p.payer_id = es.user_id
 WHERE es.expense_id = ? AND p.expense_id = ?`;
+
+export const UPDATE_EXPENSE_STATEMENT=`UPDATE expenses SET is_settled = 1 WHERE id = ?`

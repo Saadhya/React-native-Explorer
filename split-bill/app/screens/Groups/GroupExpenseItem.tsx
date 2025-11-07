@@ -7,6 +7,7 @@ import { RootStackParamList } from '@/app/navigation/types';
 import { paymentStatus } from '@/app/utils/constants';
 import { Feather } from '@expo/vector-icons';
 import { useAuth } from '@/app/context/AuthProvider';
+import { updatePaymentRecord } from '@/app/sql/payments/update';
 
 const RenderItem=({data, expense, id}:{data:any, expense:any , id:any})=>{
     const isUserDuePending=()=>{
@@ -15,6 +16,21 @@ const RenderItem=({data, expense, id}:{data:any, expense:any , id:any})=>{
         }
         return false;
     }
+    const settleUserDues=async()=>{
+        try {
+            /**
+             * update payment status
+             * if other use has updated their payment
+             * if that is the case, update the expense status to be settled
+             *  
+             */
+            await updatePaymentRecord (expense.id, id);
+            alert("success for settle user ")
+            
+        } catch (error) {
+            alert("error for settle user")
+        }
+    } 
     return(
         <View style={[styles.renderSection, {backgroundColor: expense.status==paymentStatus.COMPLETED?'green':'red'}]}>
             <View>
@@ -24,9 +40,10 @@ const RenderItem=({data, expense, id}:{data:any, expense:any , id:any})=>{
 
             </View>
             <View style={styles.rightSection}>
-                <Feather name='clock' size={20} color='#0b132b'/>
+                <Feather name={data.status===paymentStatus.PENDING?'clock':'check'} size={20} color='#0b132b'/>
             </View>
-            {isUserDuePending() && (<Button mode='elevated' textColor='black' onPress={()=>alert("setttle amount")}>Settle</Button>)}
+            {isUserDuePending() && (<Button mode='elevated' textColor='black' onPress={settleUserDues}
+                >Settle</Button>)}
 
             <Text>expense: {JSON.stringify(data)}</Text>
         </View>

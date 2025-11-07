@@ -1,4 +1,5 @@
 import Connection from "../connection";
+import { GET_PAYMENT_STATUS_OF_EXPENSE_QUERY } from "../payments/queries";
 import { GET_EXPENSE_SPLIT_OF_EXPENSE, GET_EXPENSES_OF_GROUP } from "./queries";
 
 // NOTE: This shape reflects the columns selected in GET_EXPENSES_OF_GROUP
@@ -11,6 +12,16 @@ export interface Expense {
   group_id: number;
   is_settled: number; // 0/1 as stored in SQLite; consider mapping to boolean in the UI layer
   name: string; // from the JOIN: u.name
+  created_at?: string;
+}
+
+export interface Payment {
+  id?: number;
+  payer_id: number;
+  payee_id: number;
+  amount: number;
+  expense_id: number;
+  status: number | string;
   created_at?: string;
 }
 
@@ -40,3 +51,15 @@ export const getExpenseSplits=async(expenseId: number)=>{
         throw error;
     }
 }
+
+export const getPaymentStatusOfExpense=async(expenseId: number): Promise<Payment[]>=>{
+    try {
+        const db=await Connection.getConnection();
+        const result=(await db.getAllAsync(GET_PAYMENT_STATUS_OF_EXPENSE_QUERY,[expenseId])) as unknown as Payment[];
+        console.log("Payment status of expense: ",expenseId,JSON.stringify(result));
+        return result;
+    } catch (error) {
+        console.log("Error in getPaymentStatusOfExpense: ",error);
+        throw error;
+    }
+} 
