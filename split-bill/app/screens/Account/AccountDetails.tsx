@@ -8,7 +8,7 @@ const AccountDetails = () => {
 
   return (
     <View style={styles.container}>
-      <Text>{JSON.stringify(auth?.user)}</Text>
+      {/* <Text>{JSON.stringify(auth?.user)}</Text> */}
       <AccountComp/>
     </View>
   )

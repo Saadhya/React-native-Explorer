@@ -8,8 +8,9 @@ import GroupItemPersons from "../screens/Groups/GroupItemPersons";
 import AddGroupMembers from "../screens/Groups/AddGroupMembers";
 import GroupAddExpense from "../screens/Groups/GroupAddExpense";
 import GroupExpenseItem from "../screens/Groups/GroupExpenseItem";
+import { RootStackParamList } from "../navigation/types";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createMaterialTopTabNavigator();
 
 const GroupItemNavigator=()=>{

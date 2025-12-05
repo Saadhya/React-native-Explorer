@@ -7,7 +7,7 @@ export const GroupScreen = {
   GroupItemMain:'GroupItemMain',
   GroupAddExpense:'GroupAddExpense',
   GroupExpenseItem:'GroupExpenseItem'
-}
+} as const
 export const Tabs = {
   Groups: 'Groups',
   Friends:"Friends",

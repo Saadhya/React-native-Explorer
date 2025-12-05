@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 4,
     fontWeight: '600',
+    color: '#fff',
     fontSize: 20,
   },
   title: {

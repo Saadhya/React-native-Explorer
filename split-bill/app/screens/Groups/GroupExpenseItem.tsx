@@ -9,13 +9,15 @@ import { Feather } from '@expo/vector-icons';
 import { useAuth } from '@/app/context/AuthProvider';
 import { updatePaymentRecord } from '@/app/sql/payments/update';
 
-const RenderItem=({data, expense, id}:{data:any, expense:any , id:any})=>{
+const RenderItem=({data, expense, id}:{data:any, expense:any, id:any})=>{
     const isUserDuePending=()=>{
-        if(data.user_id===id && data.status==paymentStatus.PENDING){
+        if(data.user_id===id && data.status === paymentStatus.PENDING)
             return true;
-        }
         return false;
     }
+    console.log("isUserDuePending: ",isUserDuePending());
+    console.log(`id and data.user_id: ${id} and ${data.user_id}`);
+    
     const settleUserDues=async()=>{
         try {
             /**
@@ -24,7 +26,7 @@ const RenderItem=({data, expense, id}:{data:any, expense:any , id:any})=>{
              * if that is the case, update the expense status to be settled
              *  
              */
-            await updatePaymentRecord (expense.id, id);
+            await updatePaymentRecord(expense.id, id);
             alert("success for settle user ")
             
         } catch (error) {
@@ -32,20 +34,19 @@ const RenderItem=({data, expense, id}:{data:any, expense:any , id:any})=>{
         }
     } 
     return(
-        <View style={[styles.renderSection, {backgroundColor: expense.status==paymentStatus.COMPLETED?'green':'red'}]}>
-            <View>
-                <Text>{data.name}</Text>
-                <Text>{data.status}</Text>
-                <Text>{data.amount_owed}</Text>
+        <View style={[styles.renderSection,{backgroundColor: expense.status==paymentStatus.COMPLETED?'green':'red'} ]}>
+            <View style={styles.leftSection}>
+                <Text style={styles.leftSectionText}>{data.name}</Text>
+                <Text style={styles.leftSectionText}>{data.status}</Text>
+                <Text style={styles.leftSectionText}>{data.amount_owed.toFixed(2)}</Text>
 
             </View>
             <View style={styles.rightSection}>
                 <Feather name={data.status===paymentStatus.PENDING?'clock':'check'} size={20} color='#0b132b'/>
             </View>
             {isUserDuePending() && (<Button mode='elevated' textColor='black' onPress={settleUserDues}
-                >Settle</Button>)}
-
-            <Text>expense: {JSON.stringify(data)}</Text>
+                >Settle</Button>
+            )}
         </View>
     )
 }
@@ -84,7 +85,9 @@ const GroupExpenseItem = ({ route }: NativeStackScreenProps<RootStackParamList, 
         <Text style={styles.text}>Expense Amount: {expense.amount}</Text>
         <Text style={styles.text}>Expense Paid by: {expense.name}</Text>
         <Text style={styles.text}>Expense Description: {expense.description}</Text>
-        <FlatList data={expenses} renderItem={(info)=><RenderItem data={info.item} expense={expense} id={id} />}/>
+        <FlatList data={expenses} renderItem={(info)=>
+            <RenderItem data={info.item} expense={expense} id={id} />
+        }/>
     </View>
   ) 
 }
@@ -101,16 +104,19 @@ const styles = StyleSheet.create({
         borderWidth:1,
         borderRadius:10,
         padding:10,
-        color:'#fff',
         flexDirection:'row',
         alignItems:'center',    
         justifyContent:'space-between',
-         
     },
     leftSection:{
-        flexDirection:'row',
-        alignItems:'center',    
-        justifyContent:'space-between',
+        flexDirection:'column',
+        // alignItems:'center',    
+        justifyContent:'center',
+    },
+    // add this style to the text element inside leftSection
+    leftSectionText:{
+        color:'#fff',
+        fontSize:16,
     },
     rightSection:{
         padding: 10,
