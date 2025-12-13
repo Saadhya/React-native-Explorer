@@ -3,25 +3,31 @@ import { FriendsScreen, GroupScreen } from "../utils/constants";
 import AllFriends from "../screens/Friends/AllFriends";
 import FriendPage from "../screens/Friends/FriendPage";
 import AddFriend from "../screens/Friends/AddFriend";
+import FriendAddExpense from "../screens/Friends/FriendAddExpense";
 
 const Stack = createNativeStackNavigator();
 
 const FriendsStackNavigator = () => {
   return (
       <Stack.Navigator >
+       <Stack.Screen
+          name={FriendsScreen.AllFriends}
+          component={AllFriends}
+          options={{ headerShown: false }}
+        /> 
         <Stack.Screen
           name={FriendsScreen.AddFriend}
           component={AddFriend}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={FriendsScreen.AllFriends}
-          component={AllFriends}
+          name={FriendsScreen.FriendPage}
+        component={FriendPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={FriendsScreen.FriendPage}
-        component={FriendPage}
+          name={FriendsScreen.FriendAddExpense}
+        component={FriendAddExpense}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -1,4 +1,6 @@
 import { Expense } from '@/app/sql/expenses/get';
+import { FriendsScreen } from '@/app/utils/constants';
+import { User } from '@/app/utils/interface';
 
 // Central navigation param list for the Group stack
 // Use these types with useNavigation<NavigationProp<RootStackParamList>>()
@@ -11,4 +13,11 @@ export type RootStackParamList = {
   GroupItemMain: undefined;
   GroupAddExpense: undefined;
   GroupExpenseItem: { expense: Expense };
+};
+
+export type FriendsStackParamList = {
+  [FriendsScreen.AllFriends]: undefined;
+  [FriendsScreen.AddFriend]: undefined;
+  [FriendsScreen.FriendPage]: { users: User[] };
+  [FriendsScreen.FriendAddExpense]: { users: User[] };
 };

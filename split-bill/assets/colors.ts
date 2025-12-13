@@ -7,5 +7,6 @@ export const Colors = {
   white: '#FFFFFF',
   black: '#000000',
   gray: '#8E8E93',
-  button:'#f1b903ff'
+  button: '#f1b903ff',
+  surface: '#ffffff',
 };

@@ -31,7 +31,8 @@ const AddNewGroup = () => {
       console.log("group name: ", groupName);
 
       const groupId = await createNewGroup({ name: groupName, creatorId: +id });
-      alert(`${groupName} created with id: ${groupId}` );
+      // alert(`${groupName} created with id: ${groupId}` );
+      (nav as any).navigate(GroupScreen.AllGroups);
       setGroupName('')
     } catch (error) {
       console.log("Error creating new group: ", error);

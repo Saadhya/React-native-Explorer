@@ -5,7 +5,7 @@ import { addNewPaymentRecord } from "../payments/add";
 import { paymentStatus } from "@/app/utils/constants";
 import { addNewActivityRecord } from "../activity/add";
 
-export const addNewExpense=async (expenseData: Record<string, number>, amount: any, description: string, loggedInUserId: number, groupId: number)=>{
+export const addNewExpense=async (expenseData: Record<string, number>, amount: any, description: string, loggedInUserId: number, groupId: null|number = null)=>{
     // loggedin userids
     // expense record
     const db = await Connection.getConnection();
@@ -42,7 +42,7 @@ export const addNewExpense=async (expenseData: Record<string, number>, amount: a
         console.log("Txn failed in addNewExpense: ", error);
     }
 }
-export const addExpenseRecord=async(db: any, description: string, amount: number, paidBy: number, groupId: number, isSettled: boolean)=>{
+export const addExpenseRecord=async(db: any, description: string, amount: number, paidBy: number, groupId: number|null, isSettled: boolean)=>{
     try{
         const newExpense = await db.runAsync(CREATE_NEW_EXPENSE, [description, amount, paidBy, groupId, 0 ])
         console.log("Expense record created: ", JSON.stringify(newExpense));

@@ -18,7 +18,8 @@ export const FriendsScreen = {
   AddFriend: 'AddFriend',
   AllFriends:"AllFriends",
   FriendPage:'FriendPage',
-}
+  FriendAddExpense:'FriendAddExpense'
+} as const
 
 export const ActivityScreen={
   AllActivities: 'AllActivities',
