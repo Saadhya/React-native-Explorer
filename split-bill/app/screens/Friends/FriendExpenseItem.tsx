@@ -1,9 +1,9 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { ActivityIndicator, Button } from 'react-native-paper';
 import { getExpensesOfGroup, getExpenseSplits } from '@/app/sql/expenses/get';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@/app/navigation/types';
+import { FriendsStackParamList } from '@/app/navigation/types';
 import { paymentStatus } from '@/app/utils/constants';
 import { Feather } from '@expo/vector-icons';
 import { useAuth } from '@/app/context/AuthProvider';
@@ -15,8 +15,8 @@ const RenderItem=({data, expense, id}:{data:any, expense:any, id:any})=>{
             return true;
         return false;
     }
-    console.log("isUserDuePending: ",isUserDuePending());
-    console.log(`id and data.user_id: ${id} and ${data.user_id}`);
+    // console.log("isUserDuePending: ",isUserDuePending());
+    // console.log(`id and data.user_id: ${id} and ${data.user_id}`);
     
     const settleUserDues=async()=>{
         try {
@@ -24,9 +24,8 @@ const RenderItem=({data, expense, id}:{data:any, expense:any, id:any})=>{
              * update payment status
              * if other use has updated their payment
              * if that is the case, update the expense status to be settled
-             *  
              */
-            await updatePaymentRecord(expense.id, id);
+            await updatePaymentRecord(expense.expense_id, id);
             alert("success for settle user ")
             
         } catch (error) {
@@ -51,7 +50,7 @@ const RenderItem=({data, expense, id}:{data:any, expense:any, id:any})=>{
     )
 }
 
-const GroupExpenseItem = ({ route }: NativeStackScreenProps<RootStackParamList, 'GroupExpenseItem'>) => {
+const FriendExpenseItem = ({ route }: NativeStackScreenProps<FriendsStackParamList, 'FriendExpenseItem'>) => {
     const { expense } = route.params;
     const {user:{id}}=useAuth();
     const [expenses, setExpenses]=useState<any>([]);
@@ -60,24 +59,14 @@ const GroupExpenseItem = ({ route }: NativeStackScreenProps<RootStackParamList, 
     console.log("expense in item: ",expense);
     
     useLayoutEffect(()=>{
-        getExpenseSplits(expense.id)
+        getExpenseSplits(expense.expense_id)
         .then((res)=>{
             console.log("Expense splits of expense: ",res);
             setExpenses(res);
             
             setLoading(false)})
         .catch(err=>console.log(err));
-        // const fetchExpenses=async()=>{
-        //     try {
-        //         const expenses=await getExpensesOfGroup(expense.group_id);
-        //         setExpenses(expenses);
-        //         setLoading(false);
-        //     } catch (error) {
-        //         console.log("Error in fetchExpenses: ",error);
-        //         setLoading(false);
-        //     }
-        // }
-        // fetchExpens es();
+       
     },[]);
     return loading?<ActivityIndicator size={30} style={{margin:'auto'}}/>:
   (
@@ -97,7 +86,7 @@ const styles = StyleSheet.create({
     text:{
         fontSize:20,
         fontWeight:'bold',
-        padding:15
+        padding:20
     },
     renderSection:{
         margin:10,
@@ -127,4 +116,4 @@ const styles = StyleSheet.create({
         marginLeft:'auto'
     }
 }) 
-export default GroupExpenseItem
+export default FriendExpenseItem;

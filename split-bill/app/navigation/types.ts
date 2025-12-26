@@ -20,4 +20,5 @@ export type FriendsStackParamList = {
   [FriendsScreen.AddFriend]: undefined;
   [FriendsScreen.FriendPage]: { users: User[] };
   [FriendsScreen.FriendAddExpense]: { users: User[] };
+  [FriendsScreen.FriendExpenseItem]: { expense: Expense };
 };

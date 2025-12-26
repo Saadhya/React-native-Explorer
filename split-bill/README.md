@@ -45,19 +45,19 @@ https://excalidraw.com/
 https://docs.expo.dev/develop/tools/
 
 
-to restart metro bundler:-
-npx expo start --clear
+# to start metro bundler:-
+- npx expo start --clear/-c
 
-npm install --save @react-navigation/material-bottom-tabs
+- npm install --save @react-navigation/material-bottom-tabs
 
-initial setup:-
-login/signup screen = mandatory
+# initial setup:-
+- login/signup screen = mandatory
 
-SQLITE
-creating connection with db
-creating db tables
+# SQLITE
+- creating connection with db
+- creating db tables
 
-error resolved:-
+# error resolved:-
 npm install wa-sqlite
 npm install expo-sqlite@latest
 and do it:-
@@ -66,17 +66,17 @@ Ensure the .wasm file is available The wa-sqlite.wasm file should be in the corr
 Locate the .wasm file in node_modules/wa-sqlite/dist/wa-sqlite.wasm
 Copy it to node_modules/expo-sqlite/web/wa-sqlite/
 
-CREATING CONFIG FILE:- metro.config.js
+# CREATING CONFIG FILE:- metro.config.js
 const { getDefaultConfig } = require('expo/metro-config');
 const config = getDefaultConfig(__dirname);
 config.resolver.assetExts.push('wasm');
 module.exports = config;
 
 
-- clear cache:-
+# clear cache:-
 - npx expo start -c
 
-- for the error:-Uncaught Error
+# for the error:-Uncaught Error
 Aborted(LinkError: WebAssembly.instantiate(): Import #69 "a" "pa": function import requires a callable)
 - run the app on the android phone on expo app
 
@@ -89,11 +89,11 @@ Ensure ngrok is installed globally: npm install -g ngrok or yarn global add ngro
 If using nvm (Node Version Manager), ensure the npm prefix is correctly aligned with your active Node.js version. You can check this with npm config get prefix and fix it with npm config set prefix "$NVM_BIN/..".
 Reinstall the @expo/ngrok package: npm install -g @expo/ngrok@^4.1.0
 
-Adjust Expo start command and package.json:
+# Adjust Expo start command and package.json:
 Ensure your start script in package.json explicitly uses the --tunnel flag, e.g., "start": "expo start --tunnel".
 Try running npx expo start --tunnel --reset-cache to clear the Expo cache.
 
-npx expo start - working for mobile and emulator both
+# npx expo start - working for mobile and emulator both
 
 # working:-
 - remove node-modules and package-lock file 
@@ -133,6 +133,7 @@ Renaming to .cjs tells Node to treat it as CommonJS, solving the compatibility i
 
 - working cmd = npx expo start --clear
 
-
+# refactoring and reusing the groupexpenselist and groupexpenseitem because we are using same in friends
+ 
 
 

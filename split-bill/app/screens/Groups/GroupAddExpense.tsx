@@ -9,6 +9,8 @@ import ExpenseDetails from "@/app/component/expense/ExpenseDetails";
 import { User } from "@/app/utils/interface";
 import { addNewExpense } from "@/app/sql/expenses/add";
 import { useAuth } from "@/app/context/AuthProvider";
+import { useNavigation } from "@react-navigation/native";
+import { GroupScreen } from "@/app/utils/constants";
 
 const SplitType = {
   percentage: "percentage",
@@ -24,6 +26,7 @@ const GroupAddExpense = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [splitType, setSplitType] = useState(SplitType.equally);
   const {user:{id}}= useAuth();
+  const nav = useNavigation();
   useLayoutEffect(() => {
     if (groupId === undefined) return;
     getMembersOfGroup(groupId)
@@ -55,6 +58,7 @@ const GroupAddExpense = () => {
     try{
         await addNewExpense(expenseData, +expenseAmount, expenseDesc, +id, +groupId);
         alert("success");
+        (nav as any).navigate(GroupScreen.GroupExpenseItem, { expense:expenseData })
     }catch(error){
         console.log("Error in createSplitHandler: ", error);
         alert("Failed to createSplit");

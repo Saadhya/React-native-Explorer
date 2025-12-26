@@ -1,3 +1,4 @@
+
 export const GroupScreen = {
   AllGroups: 'AllGroups',
   GroupItem:"GroupItem",
@@ -18,7 +19,8 @@ export const FriendsScreen = {
   AddFriend: 'AddFriend',
   AllFriends:"AllFriends",
   FriendPage:'FriendPage',
-  FriendAddExpense:'FriendAddExpense'
+  FriendAddExpense:'FriendAddExpense',
+  FriendExpenseItem:'FriendExpenseItem'
 } as const
 
 export const ActivityScreen={

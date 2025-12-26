@@ -28,7 +28,7 @@ const AccountComp = () => {
   return (
     <ScrollView style={[styles.container, { backgroundColor: '#0f1311' }]} contentContainerStyle={styles.content}>
       {/* Header */}
-      <Text style={[styles.header, { color: theme.colors.onBackground }]}>Account Settings</Text>
+      {/* <Text style={[styles.header, { color: theme.colors.onBackground }]}>Account Settings</Text> */}
 
       {/* Profile Card */}
       <SectionCard>
@@ -115,11 +115,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '600',
+    color: '#fff',
     fontSize: 16,
   },
   caption: {
     opacity: 0.7,
     fontSize: 12,
+    color: '#fff',
   },
   card: {
     borderRadius: 16,

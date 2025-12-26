@@ -37,7 +37,6 @@ const {user:{id}}=useAuth();
     <View style={styles.container}>
       <Text style={styles.title}>AllFriends</Text>
       <FriendsList friends={friends}/>
-      {/* <Text>{JSON.stringify(friends)}</Text> */}
       <Button style={{width:200}} onPress={navToAddFriends} mode='outlined'>Add more Friends</Button>
       <FAB style={styles.fab} onPress={navToAddExpense} label='Add Friends ' icon={"wallet-plus-outline"}/>
  

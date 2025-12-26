@@ -6,11 +6,10 @@ const Stack = createStackNavigator();
 
 const AccountStackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown:true}}>
       <Stack.Screen
         name={AccountScreen.AccountDetails}
         component={AccountDetails} // Replace with actual component
-        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

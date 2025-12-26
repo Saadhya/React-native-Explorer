@@ -6,11 +6,10 @@ const Stack = createNativeStackNavigator();
 
 const ActivityStackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator >
       <Stack.Screen
         name={ActivityScreen.AllActivities}
         component={AllActivities}
-        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
