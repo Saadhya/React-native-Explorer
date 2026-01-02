@@ -13,7 +13,7 @@ const SectionCard: React.FC<{ children: React.ReactNode }>=({children})=>{
 }
 
 const AccountComp = () => {
-  const theme = useTheme()
+  const theme = useTheme( )
   const { logout, user } = useAuth();
   const [twoFA, setTwoFA] = useState(true)
   const [loginAlerts, setLoginAlerts] = useState(true)

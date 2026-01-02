@@ -58,7 +58,7 @@ const GroupExpenseList = ({expenses, isFriend }: {expenses:  any[], isFriend?: b
       <FlatList<any>
         data={expenses}
         renderItem={(info)=>{return <RenderItem data={info.item} expenses={expenses} isFriend={isFriend} />}}
-        keyExtractor={(item)=>String(item.id)}
+        keyExtractor={(item)=>String(item.id+item.created_at)}
       />
     </View>
   )

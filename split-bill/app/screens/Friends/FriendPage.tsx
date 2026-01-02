@@ -12,13 +12,10 @@ const FriendPage = () => {
   const { users } = route.params;
   const [loading, setLoading]= useState(true);
   const [expenses, setExpenses]=useState([]);
-
+  
   const nav = useNavigation();
-  const navToFriendAddExpense = () => {
-    (nav as any).navigate(FriendsScreen.FriendAddExpense, { users })
-  }
   useLayoutEffect(()=>{
-      getSettlementBetweenFriend(+users[0].id, +users[1].id)
+    getSettlementBetweenFriend(+users[0].id, +users[1].id)
       .then((res:any)=>{
           setExpenses(res);
       })
@@ -28,15 +25,26 @@ const FriendPage = () => {
       .catch((e)=>{
           console.log("error in getting expenses", e);
       })
+
+      nav.addListener('focus', ()=>{
+         getSettlementBetweenFriend(+users[0].id, +users[1].id)
+          .then((res:any)=>{
+              setExpenses(res);
+          })
+          .then(()=>{
+              setLoading(false);
+          })
+          .catch((e)=>{
+              console.log("error in getting expenses", e);
+          })
+      })
   },[] )
   return loading? <ActivityIndicator size={30} style={{margin:'auto'}} /> 
   : (
     <View style={styles.container}>
       <Text style={styles.title}>Friends page and Expenses</Text>
-      <Text>{JSON.stringify(expenses)}</Text>
       <GroupExpenseList expenses={expenses} isFriend={true}/>
-      <FAB icon="wallet-plus-outline" label='Add Expense' 
-      style={styles.fab} onPress={ navToFriendAddExpense} />
+     
     </View>
   )
 }

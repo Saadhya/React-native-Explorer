@@ -134,6 +134,8 @@ Renaming to .cjs tells Node to treat it as CommonJS, solving the compatibility i
 - working cmd = npx expo start --clear
 
 # refactoring and reusing the groupexpenselist and groupexpenseitem because we are using same in friends
- 
+
+
+# next to be done is fix the settlement of the expenses in groups and friends both.
 
 

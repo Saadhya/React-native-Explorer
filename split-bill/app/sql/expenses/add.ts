@@ -3,7 +3,8 @@ import { CREATE_NEW_EXPENSE, CREATE_NEW_EXPENSE_SPLIT } from "./queries";
 import Connection from "../connection";
 import { addNewPaymentRecord } from "../payments/add";
 import { paymentStatus } from "@/app/utils/constants";
-import { addNewActivityRecord } from "../activity/add";
+import { addNewActivitiesForIndividuals, addNewActivityRecord } from "../activity/add";
+import { activityTextGenerator } from "@/app/utils/helpers";
 
 export const addNewExpense=async (expenseData: Record<string, number>, amount: any, description: string, loggedInUserId: number, groupId: null|number = null)=>{
     // loggedin userids
@@ -17,8 +18,18 @@ export const addNewExpense=async (expenseData: Record<string, number>, amount: a
         }
         console.log("Expense record created with id: ", JSON.stringify(expense));
 
-        const activityTextMainUser=`Added new expense in group id ${groupId}  with payment of amount ${amount}`
-        await addNewActivityRecord(db, activityTextMainUser, loggedInUserId);
+        const activityText = activityTextGenerator(
+            !groupId?"individual":"group", 
+            +expense, amount , groupId, 
+            Object.keys(expenseData)
+        )
+        console.log("test expense data == ", Object.keys(expenseData));
+
+        if(groupId){
+            await addNewActivityRecord(db, activityText, loggedInUserId);
+        } else {
+            await addNewActivitiesForIndividuals(db, activityText, Object.keys(expenseData).map((uid)=>+uid));
+        } 
         
         // user 1 is paying and user 2 or 3 has to pay to user 1 
         // 2 split record

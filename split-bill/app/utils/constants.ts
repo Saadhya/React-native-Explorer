@@ -1,7 +1,7 @@
 
 export const GroupScreen = {
   AllGroups: 'AllGroups',
-  GroupItem:"GroupItem",
+  GroupItem:'GroupItem',
   AddGroupMembers:'AddGroupMembers',
   AddGroup: 'AddGroup',
   GroupItemPersons:'GroupItemPersons',
@@ -17,14 +17,14 @@ export const Tabs = {
 }
 export const FriendsScreen = {
   AddFriend: 'AddFriend',
-  AllFriends:"AllFriends",
+  AllFriends:"All Friends",
   FriendPage:'FriendPage',
   FriendAddExpense:'FriendAddExpense',
   FriendExpenseItem:'FriendExpenseItem'
 } as const
 
 export const ActivityScreen={
-  AllActivities: 'AllActivities',
+  AllActivities: 'All Activities',
 }
 export const AccountScreen = {
   AccountDetails: 'AccountDetails',

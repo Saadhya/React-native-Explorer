@@ -1,12 +1,24 @@
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
-import { SelectContacts } from "@/app/component/friends/SelectContacts";
 import { useAppState } from "@/app/context/AppStateProvider";
 import { getMembersOfGroup } from "@/app/sql/group-members/get";
 import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { GroupScreen } from "@/app/utils/constants";
+import { Feather } from "@expo/vector-icons";
 
+const RenderGroupItem=({data}: {data:any})=>{
+
+  return(
+    <View style={styles.itemContainer}>
+      <Feather name="user" size={24} color="black" />
+      <View style={styles.row}>
+        <Text style={styles.title}>{data.name}</Text>
+        <Text style={styles.caption}>{data.phone}</Text>
+      </View>
+    </View>
+  )
+}
 const GroupItemPersons = () => {
   const nav = useNavigation();
   // const [members, setMembers] = useState<any[]>([]);
@@ -18,15 +30,19 @@ const GroupItemPersons = () => {
     if(selectedGroup?.id){
       getMembersOfGroup(+selectedGroup?.id)
         .then(setGroupMembers)
-        // .then((res) => {
-        //   console.log("group members: ", res);
-        //   setGroupMembers(res || []);
-        // })
         .catch((err) => {
           console.log("error while fetching group members: ", err);
         }); //  + unary + operator to convert string to number
     }
-  }, [selectedGroup]);
+    nav.addListener('focus',()=>{
+      (selectedGroup?.id) &&
+        getMembersOfGroup(+selectedGroup?.id)
+            .then(setGroupMembers)
+            .catch((err) => {
+              console.log("error while fetching group members: ", err);
+            }); 
+        })
+  }, []);
 
   const navToAddMembers = () => {
     (nav as any).navigate(GroupScreen.AddGroupMembers, {groupMembers});
@@ -35,8 +51,10 @@ const GroupItemPersons = () => {
   return (
     <View>
       <Button mode="contained" onPress={navToAddMembers} style={styles.addBtn}>Add New Members</Button>
-      <Text>GroupItemPersons</Text>
-      <Text style={styles.text}>{JSON.stringify(groupMembers)} </Text>
+      <FlatList data={groupMembers} 
+        keyExtractor={(item)=>item.id+item.created_at}
+        renderItem={({item})=><RenderGroupItem data={item}/>}
+      />
     </View>
   );
 };
@@ -49,7 +67,25 @@ const styles = StyleSheet.create({
     marginVertical:10, 
     marginHorizontal:'auto',
   },
-  text:{
-    padding:10
+  itemContainer:{
+    padding:20,
+    marginVertical:5,
+    marginHorizontal:10,
+    borderRadius:10,
+    backgroundColor:'#fff',
+    elevation:2,
+    gap:15,
+    flexDirection:'row',
+  },
+  row:{
+    gap:5
+  },
+  title:{
+    fontWeight:'bold',
+    fontSize:16
+  },
+  caption:{
+    fontSize:12,
+    opacity:0.7
   }
 });

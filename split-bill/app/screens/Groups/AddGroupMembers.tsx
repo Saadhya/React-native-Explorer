@@ -20,14 +20,6 @@ const AddGroupMembers = () => {
 
   const addNewMembers = async () => {
     console.log("selectedContacts : "+selectedContacts.length);
-    // if (selectedContacts.length === 0) {
-    //   console.log("no contacts");
-    //   return;
-    // }
-    
-    // add contactsToAdd to group members table with selectedGroup id
-    // Alert.alert(`Adding new members: ${selectedContacts.length}`);
-
     try {
       // check disabling this function call if no contacts are selected or not working as expected
       await createNewGroupMembersTransaction({
@@ -35,7 +27,15 @@ const AddGroupMembers = () => {
         groupId: selectedGroup?.id,
       });
       Alert.alert("Success", "Members added to the group.");
-      // add navigation to the members screen= GroupItemPersons
+      // add navigation to the members tab inside the selected group
+      (nav as any).navigate(GroupScreen.GroupItem, 
+        {
+          screen:GroupScreen.GroupItemPersons, 
+          params:{
+            groupId:selectedGroup?.id
+          }
+        }
+      );
 
     } catch (err) {
       console.log("error while adding new members to group: ", err);
@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
   container: {
     margin: "auto",
     justifyContent: "flex-start",
-    // alignContent: "flex-start",
     width: Dimensions.get("window").width - 50,
   },
   title: {

@@ -3,12 +3,15 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "@/app/context/AuthProvider";
 import { getGroupOfUser } from "@/app/sql/group-members/get";
 import GroupListRenderItem from "./GroupListRenderItem";
+import { useNavigation } from "@react-navigation/native";
 
 const GroupList = () => {
   const [groups, setGroups] = useState([]);
   const {
     user: { id },
   } = useAuth();
+
+  const nav = useNavigation();
 
   useEffect(() => {
     // +id means converting from string to number-
@@ -20,7 +23,15 @@ const GroupList = () => {
       .catch((err) => {
         console.log("Error while fetching groups of user: ", err);
       });
-  }, [groups]);
+
+      nav.addListener('focus',()=>{
+        getGroupOfUser(+id)
+        .then((res:any)=>setGroups(res))
+        .catch((err)=>{
+          console.log("Error while focusing groups of user: ", err);
+        })
+      })
+  }, [] );
 
   return (
     groups.length > 0 && (
