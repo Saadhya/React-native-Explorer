@@ -11,3 +11,7 @@ INNER JOIN payments p ON p.payer_id = es.user_id
 WHERE es.expense_id = ? AND p.expense_id = ?`;
 
 export const UPDATE_EXPENSE_STATEMENT=`UPDATE expenses SET is_settled = 1 WHERE id = ?`
+
+export const DELETE_PAYMENTS_FOR_EXPENSE = `DELETE FROM payments WHERE expense_id = ?`;
+export const DELETE_EXPENSE_SPLITS_FOR_EXPENSE = `DELETE FROM expense_splits WHERE expense_id = ?`;
+export const DELETE_EXPENSE = `DELETE FROM expenses WHERE id = ?`;

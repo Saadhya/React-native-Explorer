@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { Alert, FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useCallback, useLayoutEffect, useState } from 'react'
 import { ActivityIndicator, Button } from 'react-native-paper';
 import { getExpensesOfGroup, getExpenseSplits } from '@/app/sql/expenses/get';
@@ -9,6 +9,7 @@ import { Feather } from '@expo/vector-icons';
 import { useAuth } from '@/app/context/AuthProvider';
 import { updatePaymentRecord } from '@/app/sql/payments/update';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { deleteExpenseById } from '@/app/sql/expenses/delete';
 
 const RenderItem=({data, expense, id}:{data:any, expense:any, id:any})=>{
     const isUserDuePending=()=>{
@@ -78,7 +79,7 @@ const GroupExpenseItem = ({ route }: NativeStackScreenProps<RootStackParamList, 
     //     });
         
     // },[]);
-
+const nav = useNavigation()
     useFocusEffect(
         useCallback(() => {
             // This runs when the screen comes into focus
@@ -95,6 +96,30 @@ const GroupExpenseItem = ({ route }: NativeStackScreenProps<RootStackParamList, 
         }, [expense.id])
     );
 
+    const handleDelete=async () => {
+        Alert.alert("Delete expense", "This will remove the expense and all splits.", [
+            { text: "Cancel", style: "cancel" },
+            {
+            text: "Delete",
+            style: "destructive",
+            onPress: async () => {
+                try {
+                setLoading(true);
+                await deleteExpenseById(expense.id);
+                Alert.alert("Deleted", "Expense removed successfully.");
+                if (nav) {
+                    nav.goBack();
+                }
+                } catch (error) {
+                Alert.alert("Oops", error instanceof Error ? error.message : "Unable to delete.");
+                } finally {
+                setLoading(false);
+                }
+            },
+            },
+        ]);
+    };
+    
     return loading?<ActivityIndicator size={30} style={{margin:'auto'}}/>:
   (
     <View>
@@ -103,7 +128,14 @@ const GroupExpenseItem = ({ route }: NativeStackScreenProps<RootStackParamList, 
         <Text style={styles.text}>Expense Description: {expense.description}</Text>
         <FlatList data={expenses} renderItem={(info)=>
             <RenderItem data={info.item} expense={expense} id={id} />
-        }/>
+        } keyExtractor={(item) => `${item.id}-${item.user_id}`} />
+        <Button
+          mode="text"
+          textColor="#ff6b6b"
+          onPress={() => handleDelete()}
+        >
+          Delete expense
+        </Button>
     </View>
   ) 
 }
