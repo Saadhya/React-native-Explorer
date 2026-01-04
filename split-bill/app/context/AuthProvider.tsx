@@ -18,7 +18,7 @@ export interface NewUser {
 const AuthContext = createContext({
   user: { id:0, name: "", email: "", phone: "", password: "" },
   loggedIn: false,
-  login: async (id: number, password: string) => {},
+  login: async (id: number, password: string) => Promise.resolve(),
   signup: async ({
     name,
     email,
@@ -29,9 +29,9 @@ const AuthContext = createContext({
     email: string;
     phone: string;
     password: string;
-  }) => {},
-  logout: async () => {},
-  resetPassword: async (email: string) => {},
+  }) => Promise.resolve(),
+  logout: async () => Promise.resolve(),
+  resetPassword: async (email: string) => Promise.resolve(),
 });
 
 export const useAuth = () => useContext(AuthContext);

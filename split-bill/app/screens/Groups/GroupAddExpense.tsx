@@ -27,6 +27,7 @@ const GroupAddExpense = () => {
   const [splitType, setSplitType] = useState(SplitType.equally);
   const {user:{id}}= useAuth();
   const nav = useNavigation();
+
   useLayoutEffect(() => {
     if (groupId === undefined) return;
     getMembersOfGroup(groupId)
@@ -56,12 +57,17 @@ const GroupAddExpense = () => {
       return;
     }
     try{
-        await addNewExpense(expenseData, +expenseAmount, expenseDesc, +id, +groupId);
-        alert("success");
-        (nav as any).navigate(GroupScreen.GroupExpenseItem, { expense: expenseData });
+        const newExp = await addNewExpense(expenseData, +expenseAmount, expenseDesc, +id, +groupId);
+        // alert(`expense data : ${JSON.stringify(expenseData)}`);
+        alert(newExp);
+        const resExpense= { name: users[0].name, description: expenseDesc, amount: +expenseAmount, paidBy: +id };
+        if(newExp || typeof newExp !== 'undefined'){
+            // console.log("Navigating to expense item with expense:", resExpense);
+            (nav as any).navigate(GroupScreen.GroupExpenseItem, { expense: resExpense });
+        }
     }catch(error){
         console.log("Error in createSplitHandler: ", error);
-        alert("Failed to create expense");
+        alert(error instanceof Error ? error.message : "Failed to create");
     }
   }
   return (

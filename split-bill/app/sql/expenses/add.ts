@@ -12,6 +12,10 @@ export const addNewExpense=async (expenseData: Record<string, number>, amount: a
     const db = await Connection.getConnection();
     try {
         await db.execAsync("BEGIN TRANSACTION");
+        // console.log("Amount:", amount);
+        if(amount===0 || !amount || isNaN(amount)) {
+            throw new Error("Skipping expense creation: amount is 0 or invalid");
+        }
         const expense = await addExpenseRecord(db, description, amount, loggedInUserId, groupId, false);
         if (typeof expense !== "number") {
             throw new Error("Failed to create expense record: missing ID");
@@ -44,13 +48,14 @@ export const addNewExpense=async (expenseData: Record<string, number>, amount: a
         
             await addNewPaymentRecord(db, +userId, loggedInUserId, sharedAmount, expense, paymentStatus.PENDING);
             console.log("payment record created successfully: ");
-            
         } 
         await db.execAsync("COMMIT");
         console.log("Expense Txn complete");
+        return expense;
     } catch (error) {
         await db.execAsync("ROLLBACK")
         console.log("Txn failed in addNewExpense: ", error);
+        throw error;
     }
 }
 export const addExpenseRecord=async(db: any, description: string, amount: number, paidBy: number, groupId: number|null, isSettled: boolean)=>{

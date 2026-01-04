@@ -19,10 +19,8 @@ const LoginComp = () => {
     console.log(`User ID: ${userId}, Password: ${password}`);
     try {
       await auth.login(Number(userId), password);
-
     } catch (error) {
       console.log(error);
-      
     }
   };
   const switchToSignup = () => {

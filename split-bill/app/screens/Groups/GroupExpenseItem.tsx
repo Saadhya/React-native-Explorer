@@ -58,7 +58,6 @@ const GroupExpenseItem = ({ route }: NativeStackScreenProps<RootStackParamList, 
     const [loading, setLoading]=useState(false);
     // const [expenseSplits, setExpenseSplits]=useState<any>([]);
     console.log("expense in item: ",expense);
-    console.log("expense id: ", expense.id);
     // update this with focuseffect
     // useLayoutEffect(()=>{
     //     getExpenseSplits(expense.id)
