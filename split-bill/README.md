@@ -137,5 +137,9 @@ Renaming to .cjs tells Node to treat it as CommonJS, solving the compatibility i
 
 
 # next to be done is fix the settlement of the expenses in groups and friends both.
+- its done in groups and friends both.
+- update account ui also
+- createsplit not loading data properly
+
 
 

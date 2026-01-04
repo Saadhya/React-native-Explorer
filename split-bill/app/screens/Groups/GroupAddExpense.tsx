@@ -58,10 +58,10 @@ const GroupAddExpense = () => {
     try{
         await addNewExpense(expenseData, +expenseAmount, expenseDesc, +id, +groupId);
         alert("success");
-        (nav as any).navigate(GroupScreen.GroupExpenseItem, { expense:expenseData })
+        (nav as any).navigate(GroupScreen.GroupExpenseItem, { expense: expenseData });
     }catch(error){
         console.log("Error in createSplitHandler: ", error);
-        alert("Failed to createSplit");
+        alert("Failed to create expense");
     }
   }
   return (
@@ -94,7 +94,7 @@ const GroupAddExpense = () => {
         <TextInput style={styles.input} keyboardType="number-pad" mode="flat" placeholder="Expense Amount" 
         value={expenseAmount} onChangeText={setExpenseAmount}/>
       </View>
-      <Button onPress={createSplitHandler} mode="text">Create Split</Button>
+      <Button onPress={createSplitHandler} mode="contained" style={styles.splitBtn}>Create Split</Button>
       {expenseData && users && 
       <ExpenseDetails expenseData={expenseData} totalAmount={expenseAmount} users={users}/>
       }
@@ -109,6 +109,11 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'center',
     alignItems:'center',
+  },
+  splitBtn:{
+    width: '80%',
+    marginVertical: 10,
+    alignSelf: 'center',
   },
   selectionView: {
     flexDirection: "row",

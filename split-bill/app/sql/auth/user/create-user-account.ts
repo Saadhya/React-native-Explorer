@@ -50,6 +50,7 @@ export const registerUserUnOfficial = async (contactIds: Array<string | number>)
         continue;
         }
         let user = await isUserAlreadyRegistered(contact.phone);
+         
         let userdata: any;
         
         if (user && user.length > 0) {
@@ -60,7 +61,7 @@ export const registerUserUnOfficial = async (contactIds: Array<string | number>)
             name: contact.name,
             email: null,
             phone: contact.phone,
-            password: "",
+            password: contact.phone,
             is_registered: 0
         });
         }

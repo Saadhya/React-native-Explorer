@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useCallback, useLayoutEffect, useState } from 'react'
 import { ActivityIndicator, Button } from 'react-native-paper';
 import { getExpensesOfGroup, getExpenseSplits } from '@/app/sql/expenses/get';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -8,6 +8,7 @@ import { paymentStatus } from '@/app/utils/constants';
 import { Feather } from '@expo/vector-icons';
 import { useAuth } from '@/app/context/AuthProvider';
 import { updatePaymentRecord } from '@/app/sql/payments/update';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 const RenderItem=({data, expense, id}:{data:any, expense:any, id:any})=>{
     const isUserDuePending=()=>{
@@ -24,7 +25,6 @@ const RenderItem=({data, expense, id}:{data:any, expense:any, id:any})=>{
              * update payment status
              * if other use has updated their payment
              * if that is the case, update the expense status to be settled
-             *  
              */
             await updatePaymentRecord(expense.id, id);
             alert("success for settle user ")
@@ -58,27 +58,44 @@ const GroupExpenseItem = ({ route }: NativeStackScreenProps<RootStackParamList, 
     const [loading, setLoading]=useState(false);
     // const [expenseSplits, setExpenseSplits]=useState<any>([]);
     console.log("expense in item: ",expense);
-    
-    useLayoutEffect(()=>{
-        getExpenseSplits(expense.id)
-        .then((res)=>{
-            console.log("Expense splits of expense: ",res);
-            setExpenses(res);
+    console.log("expense id: ", expense.id);
+    // update this with focuseffect
+    // useLayoutEffect(()=>{
+    //     getExpenseSplits(expense.id)
+    //     .then((res)=>{
+    //         console.log("Expense splits of expense: ",res);
+    //         setExpenses(res);
+    //         setLoading(false)})
+    //     .catch(err=>console.log(err));
+
+    //     nav.addListener('focus', () => {
+    //         getExpenseSplits(expense.id)
+    //     .then((res)=>{
+    //         console.log("Expense splits of expense: ",res);
+    //         setExpenses(res);
             
-            setLoading(false)})
-        .catch(err=>console.log(err));
-        // const fetchExpenses=async()=>{
-        //     try {
-        //         const expenses=await getExpensesOfGroup(expense.group_id);
-        //         setExpenses(expenses);
-        //         setLoading(false);
-        //     } catch (error) {
-        //         console.log("Error in fetchExpenses: ",error);
-        //         setLoading(false);
-        //     }
-        // }
-        // fetchExpens es();
-    },[]);
+    //         setLoading(false)})
+    //     .catch(err=>console.log(err));
+    //     });
+        
+    // },[]);
+
+    useFocusEffect(
+        useCallback(() => {
+            // This runs when the screen comes into focus
+            getExpenseSplits(expense.id)
+                .then((res) => {
+                    console.log("Expense splits of expense: ", res);
+                    setExpenses(res);
+                    setLoading(false);
+                })
+                .catch(err => {
+                    console.log("Error fetching expense splits: ", err);
+                    setLoading(false);
+                });
+        }, [expense.id])
+    );
+
     return loading?<ActivityIndicator size={30} style={{margin:'auto'}}/>:
   (
     <View>

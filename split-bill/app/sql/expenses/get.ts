@@ -44,7 +44,7 @@ export const getExpenseSplits=async(expenseId: number)=>{
     try {
         const db=await Connection.getConnection();
         const result=(await db.getAllAsync(GET_EXPENSE_SPLIT_OF_EXPENSE,[expenseId, expenseId]));
-        console.log("Expense splits of expense: ",expenseId,JSON.stringify(result));
+        console.log("Expense splits of expense: ",expenseId, JSON.stringify(result));
         return result;
     } catch (error) {
         console.log("Error in getExpenseSplits: ",error);
